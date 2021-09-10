@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="addContacto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="registro" type="tns:contactos" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="contactos">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="operacion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="razon_social" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="rfc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="rol" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="guid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="impuesto" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="requiere_expediente_fact" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Domicilios" type="tns:ArrayOfDomicilios" />
+          <s:element minOccurs="0" maxOccurs="1" name="Telefonos" type="tns:ArrayOfTelefonos" />
+          <s:element minOccurs="0" maxOccurs="1" name="Emails" type="tns:ArrayOfEmails" />
+          <s:element minOccurs="0" maxOccurs="1" name="Relaciones" type="tns:ArrayOfRelaciones" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDomicilios">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="domicilios" nillable="true" type="tns:domicilios" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="domicilios">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="tipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="calle" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="numero" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="barrio" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="localidad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="estado" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTelefonos">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="telefonos" nillable="true" type="tns:telefonos" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="telefonos">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="tipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="numero" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="descripcion" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfEmails">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="emails" nillable="true" type="tns:emails" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="emails">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="direccion" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="certifica" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="general" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="comprobantes" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRelaciones">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="relaciones" nillable="true" type="tns:relaciones" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="relaciones">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="contacto_guid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="rol" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="nombre" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="addContactoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="addContactoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="addOrden">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="registro" type="tns:orden_publicitaria" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="orden_publicitaria">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Renglones" type="tns:ArrayOfRenglon" />
+          <s:element minOccurs="0" maxOccurs="1" name="Empresa" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Estado" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CUIAgencia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RazSocAgencia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CUIAnunciante" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RazSocAnunciante" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Periodo" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sennal" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NroOP" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NroOrden" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdOPMMASS" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MarcaDescripcion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompetitivoDescripcion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponsableOrden" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Comentarios" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalGralMenciones" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaVencimiento" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRenglon">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="renglon" nillable="true" type="tns:renglon" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="renglon">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Menciones" type="tns:ArrayOfMencion" />
+          <s:element minOccurs="1" maxOccurs="1" name="NroDeRenglon" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProgramaDescripcion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HoraDesdeCompraBloqHorario" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HoraHastaCompraBloqHorario" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Duracion" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="PrecioSegundo" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="CodigoMaterial" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TemaMaterialusar" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TipoPublicidad" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfMencion">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="mencion" nillable="true" type="tns:mencion" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="mencion">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="DiaDEEmision" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ubicacion" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UbicacionManualOrden" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalMenciones" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="addOrdenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="addOrdenResult" type="tns:respuesta" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="respuesta">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Descripcion" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="addContactoSoapIn">
+    <wsdl:part name="parameters" element="tns:addContacto" />
+  </wsdl:message>
+  <wsdl:message name="addContactoSoapOut">
+    <wsdl:part name="parameters" element="tns:addContactoResponse" />
+  </wsdl:message>
+  <wsdl:message name="addOrdenSoapIn">
+    <wsdl:part name="parameters" element="tns:addOrden" />
+  </wsdl:message>
+  <wsdl:message name="addOrdenSoapOut">
+    <wsdl:part name="parameters" element="tns:addOrdenResponse" />
+  </wsdl:message>
+  <wsdl:portType name="wsimportSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addContacto">
+      <wsdl:input message="tns:addContactoSoapIn" />
+      <wsdl:output message="tns:addContactoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addOrden">
+      <wsdl:input message="tns:addOrdenSoapIn" />
+      <wsdl:output message="tns:addOrdenSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wsimportSoap" type="tns:wsimportSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addContacto">
+      <soap:operation soapAction="http://tempuri.org/addContacto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addOrden">
+      <soap:operation soapAction="http://tempuri.org/addOrden" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsimportSoap12" type="tns:wsimportSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addContacto">
+      <soap12:operation soapAction="http://tempuri.org/addContacto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addOrden">
+      <soap12:operation soapAction="http://tempuri.org/addOrden" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wsimport">
+    <wsdl:port name="wsimportSoap" binding="tns:wsimportSoap">
+      <soap:address location="https://localhost:44314/wsimport.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsimportSoap12" binding="tns:wsimportSoap12">
+      <soap12:address location="https://localhost:44314/wsimport.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
