@@ -16,6 +16,12 @@ namespace WebAppMmassImport.Clases
         public int Id { get; set; }
     }
 
+    public class montos
+    {
+        public double monto { get; set; }
+        public int segundos { get; set; }
+    }
+
     public class mencion
     {
         public string DiaDEEmision { get; set; }
@@ -269,10 +275,35 @@ namespace WebAppMmassImport.Clases
                     }
                     DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString());
 
+                    montos mon = new montos();
+                    double montoTotal = 0;
+                    int segPag = 0;
+
                     foreach (renglon elem in Renglones)
                     {
-                        saveRenglon(elem, Anio, Mes, Id_producto, Id_anunciante, Id_medio, Fecha, fechaVen, nro_orden, Id_empresa);
+                        mon = saveRenglon(elem, Anio, Mes, Id_producto, Id_anunciante, Id_medio, Fecha, fechaVen, nro_orden, Id_empresa);
+                        montoTotal += mon.monto;
+                        segPag += mon.segundos;
                     }
+
+                    string sqlOp2 = "update orden_pub_ap set monto_bruto=@monto_bruto, primer_neto=@primer_neto, seg_neto=@seg_neto, tercer_neto=@tercer_neto, " +
+                                    "seg_pagados=@seg_pagados where id_op = @id_op";
+                    List<SqlParameter> parametrosOp2 = new List<SqlParameter>()
+                {
+                    new SqlParameter()
+                    { ParameterName="@id_op",SqlDbType = SqlDbType.Int, Value = IdOPMMASS },
+                    new SqlParameter()
+                    { ParameterName="@monto_bruto",SqlDbType = SqlDbType.Decimal, Value = montoTotal },
+                    new SqlParameter()
+                    { ParameterName="@primer_neto",SqlDbType = SqlDbType.Decimal, Value = montoTotal },
+                    new SqlParameter()
+                    { ParameterName="@seg_neto",SqlDbType = SqlDbType.Decimal, Value = montoTotal },
+                    new SqlParameter()
+                    { ParameterName="@tercer_neto",SqlDbType = SqlDbType.Decimal, Value = montoTotal },
+                    new SqlParameter()
+                    { ParameterName="@seg_pagados",SqlDbType = SqlDbType.Int, Value = segPag }
+                };
+                    DB.Execute(sqlOp2, parametrosOp2);
 
                     // Ejecutivos
                     int Id_ejecutivo = comprobarEjecutivo(ResponsableOrden);
@@ -452,8 +483,10 @@ namespace WebAppMmassImport.Clases
         }
 
  
-        public void saveRenglon(renglon reng, int anio, int mes, int idProd, int idAnun, int idMedio, DateTime fechaD, DateTime fechaH, int nro_orden, int idEmpresa)
+        public montos saveRenglon(renglon reng, int anio, int mes, int idProd, int idAnun, int idMedio, DateTime fechaD, DateTime fechaH, int nro_orden, int idEmpresa)
         {
+            montos mon = new montos();
+
             string sql = "insert into orden_pub_as(id_op, anio, mes, nro_orden, id_detalle, id_programa, id_producto, hs_desde, hs_hasta, duracion, id_anunciante, id_medio, imp_tarifa, cod_material, " +
                          "id_tema, es_pnt, tipo_sel_ubicacion, fecha_desde, fecha_hasta, id_categoria, id_categoria_ubi, tipo_tarifa, clase_tarifa, id_tarifa, tipo_suger, id_duracion, formausotarifa, " +
                          "id_empresa, id_estadoaprobacion, id_usuario_aprob, fecha_aprob, tar_formauso, id_emisiones_pgma) " +
@@ -575,11 +608,12 @@ namespace WebAppMmassImport.Clases
                     {
                         saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
                         cont++;
-                    }
-                 
+                        mon.monto += reng.Duracion * reng.PrecioSegundo;
+                    }  
                 }
+                mon.segundos = contadorSpots * reng.Duracion;
 
-                string sqlR2 = "update orden_pub_as set cant_spot=@cant_spot, seg_pag=@seg_pag where id_op = @id_op and anio=@anio and mes=@mes and nro_orden=@nro_orden and id_detalle=@id_detalle";
+                string sqlR2 = "update orden_pub_as set cant_spot=@cant_spot, seg_pag=@seg_pag, valor_mencion=@valor_mencion, monto_bruto=@monto_bruto, monto_neto=@monto_neto where id_op = @id_op and anio=@anio and mes=@mes and nro_orden=@nro_orden and id_detalle=@id_detalle";
                 List<SqlParameter> parametrosR2 = new List<SqlParameter>()
                 {
                     new SqlParameter()
@@ -595,7 +629,13 @@ namespace WebAppMmassImport.Clases
                     new SqlParameter()
                     { ParameterName = "@cant_spot", SqlDbType = SqlDbType.Int, Value = contadorSpots },
                     new SqlParameter()
-                    { ParameterName = "@seg_pag", SqlDbType = SqlDbType.Int, Value = contadorSpots * reng.Duracion }
+                    { ParameterName = "@seg_pag", SqlDbType = SqlDbType.Int, Value = mon.segundos },
+                    new SqlParameter()
+                    { ParameterName="@valor_mencion",SqlDbType = SqlDbType.Decimal, Value = mon.monto },
+                    new SqlParameter()
+                    { ParameterName="@monto_bruto",SqlDbType = SqlDbType.Decimal, Value = mon.monto },
+                    new SqlParameter()
+                    { ParameterName="@monto_neto",SqlDbType = SqlDbType.Decimal, Value = mon.monto }
                 };
                 DB.Execute(sqlR2, parametrosR2);
             }
@@ -603,6 +643,7 @@ namespace WebAppMmassImport.Clases
             {
                 Console.WriteLine(ex.Message);
             }
+            return mon;
         }
 
         public int comprobarPrograma(string desc)
