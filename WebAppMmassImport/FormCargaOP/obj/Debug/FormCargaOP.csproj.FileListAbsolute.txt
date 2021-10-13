@@ -16,3 +16,12 @@ C:\Users\devagustin\Desktop\WebAppMmassImport\FormCargaOP\bin\Debug\FormCargaOP.
 C:\Users\devagustin\Desktop\WebAppMmassImport\FormCargaOP\bin\Debug\FormCargaOP.pdb
 C:\Users\devagustin\Desktop\WebAppMmassImport\FormCargaOP\obj\Debug\FormCargaOP.exe
 C:\Users\devagustin\Desktop\WebAppMmassImport\FormCargaOP\obj\Debug\FormCargaOP.pdb
+C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\bin\Debug\FormCargaOP.exe.config
+C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\bin\Debug\FormCargaOP.exe
+C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\bin\Debug\FormCargaOP.pdb
+C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Debug\FormCargaOP.csprojAssemblyReference.cache
+C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Debug\FormCargaOP.Form1.resources
+C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Debug\FormCargaOP.Properties.Resources.resources
+C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Debug\FormCargaOP.csproj.GenerateResource.cache
+C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Debug\FormCargaOP.exe
+C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Debug\FormCargaOP.pdb

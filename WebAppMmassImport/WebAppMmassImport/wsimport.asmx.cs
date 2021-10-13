@@ -210,39 +210,39 @@ namespace WebAppMmassImport
                         }
                         error = true;
                     }
-
-                    else 
-                    {
-                        if (elem.HoraDesdeCompraBloqHorario != "" && elem.HoraHastaCompraBloqHorario != "")
-                        {
-                            if(registro.getEmision(idProg, elem.HoraDesdeCompraBloqHorario, elem.HoraHastaCompraBloqHorario) == 0)
-                            {
-                                contErr9++;
-                                if (contErr9 < 2)
-                                {
-                                    rengErr9 = elem.NroDeRenglon.ToString();
-                                }
-                                else
-                                {
-                                    rengErr9 += ", " + elem.NroDeRenglon;
-                                }
-                                error = true;
-                            }                     
-                        }
-                        else
-                        {
-                            contErr8++;
-                            if (contErr8 < 2)
-                            {
-                                rengErr8 = elem.NroDeRenglon.ToString();
-                            }
-                            else
-                            {
-                                rengErr8 += ", " + elem.NroDeRenglon;
-                            }
-                            error = true;
-                        }
-                    }
+                    //COMENTADO PORQUE ESTA VALIDACIÓN YA LA HACEN DESDE NOTABLES
+                    //else 
+                    //{
+                    //    if (elem.HoraDesdeCompraBloqHorario != "" && elem.HoraHastaCompraBloqHorario != "")
+                    //    {
+                    //        if(registro.getEmision(idProg, elem.HoraDesdeCompraBloqHorario, elem.HoraHastaCompraBloqHorario) == 0)
+                    //        {
+                    //            contErr9++;
+                    //            if (contErr9 < 2)
+                    //            {
+                    //                rengErr9 = elem.NroDeRenglon.ToString();
+                    //            }
+                    //            else
+                    //            {
+                    //                rengErr9 += ", " + elem.NroDeRenglon;
+                    //            }
+                    //            error = true;
+                    //        }                     
+                    //    }
+                    //    else
+                    //    {
+                    //        contErr8++;
+                    //        if (contErr8 < 2)
+                    //        {
+                    //            rengErr8 = elem.NroDeRenglon.ToString();
+                    //        }
+                    //        else
+                    //        {
+                    //            rengErr8 += ", " + elem.NroDeRenglon;
+                    //        }
+                    //        error = true;
+                    //    }
+                    //}
                 }
 
                 if (elem.ProgramaDescripcion == "" && (elem.HoraDesdeCompraBloqHorario == "" || elem.HoraHastaCompraBloqHorario == ""))

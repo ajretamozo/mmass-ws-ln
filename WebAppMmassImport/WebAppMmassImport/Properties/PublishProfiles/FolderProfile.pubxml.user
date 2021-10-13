@@ -6,7 +6,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\devagustin\Desktop\WebAppMmassImport\WebAppMmassImport\bin\Release\WSLaNacion+</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\WebAppMmassImport\bin\Release\WSLaNacion+</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/HelpPage/HelpPage.css">
@@ -286,10 +286,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>11/28/2018 13:04:24</publishTime>
     </File>
     <File Include="bin/WebAppMmassImport.dll">
-      <publishTime>09/01/2021 13:43:01</publishTime>
+      <publishTime>10/13/2021 10:43:01</publishTime>
     </File>
     <File Include="bin/WebAppMmassImport.pdb">
-      <publishTime>09/01/2021 13:43:01</publishTime>
+      <publishTime>10/13/2021 10:43:01</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>
@@ -385,7 +385,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>09/25/2020 11:09:05</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/01/2021 13:43:02</publishTime>
+      <publishTime>10/13/2021 10:43:02</publishTime>
     </File>
     <File Include="wsimport.asmx">
       <publishTime>09/25/2020 11:11:23</publishTime>
