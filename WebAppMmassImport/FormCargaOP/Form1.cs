@@ -104,7 +104,7 @@ namespace FormCargaOP
 
 
                 op.Empresa = "SAPU";
-                op.Estado = 3;
+                op.Estado = 4;
                 op.CUIAgencia = "A2222";
                 op.RazSocAgencia = "Agencia A2";
                 op.CUIAnunciante = "B2222";
@@ -113,7 +113,7 @@ namespace FormCargaOP
                 op.Sennal = "LN+";
                 op.NroOP = "7000006003";
                 op.NroOrden = "1";
-                op.IdOPMMASS = 0;
+                op.IdOPMMASS = 5026;
                 op.MarcaDescripcion = "Producto test 2";
                 op.ResponsableOrden = "Sebastian Rolando";
                 op.Comentarios = "prueba movimiento";
