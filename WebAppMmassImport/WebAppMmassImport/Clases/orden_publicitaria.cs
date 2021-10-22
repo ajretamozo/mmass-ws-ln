@@ -495,10 +495,15 @@ namespace WebAppMmassImport.Clases
                          " @id_tema, @es_pnt, 0, @fecha_desde, @fecha_hasta, @id_categoria, @id_categoria_ubi, 3, 0, 1, @tipo_suger, 1, 0, @id_empresa, 4, 1, @fecha_aprob, 0, @id_emisiones_pgma)";
 
             int idProg = comprobarPrograma(reng.ProgramaDescripcion);
+            int idEmi = 0;
+
+            if (idProg != 0)
+            {
+                idEmi = getEmision(idProg, reng.HoraDesdeCompraBloqHorario, reng.HoraHastaCompraBloqHorario);
+            }
+
             DateTime horaD = DateTime.Parse(reng.HoraDesdeCompraBloqHorario);
             DateTime horaH = DateTime.Parse(reng.HoraHastaCompraBloqHorario);
-
-            int idEmi = getEmision(idProg, reng.HoraDesdeCompraBloqHorario, reng.HoraHastaCompraBloqHorario);
 
             int idTipoMat = getIdCompetitivo(CompetitivoDescripcion);
             int idTema = comprobarTema(idProd, reng.CodigoMaterial, reng.Duracion);
@@ -556,12 +561,13 @@ namespace WebAppMmassImport.Clases
                             new SqlParameter()
                             { ParameterName="@fecha_aprob",SqlDbType = SqlDbType.DateTime, Value = DateTime.Today }
             };
-            if (idProg != 0)
+            if (idProg != 0 && idEmi != 0)
             {
                 parametrosR.Add(new SqlParameter() { ParameterName = "@id_programa", SqlDbType = SqlDbType.Int, Value = idProg });
                 parametrosR.Add(new SqlParameter() { ParameterName = "@tipo_suger", SqlDbType = SqlDbType.Int, Value = 0 });
                 parametrosR.Add(new SqlParameter() { ParameterName = "@hs_desde", SqlDbType = SqlDbType.DateTime, Value = DBNull.Value });
                 parametrosR.Add(new SqlParameter() { ParameterName = "@hs_hasta", SqlDbType = SqlDbType.DateTime, Value = DBNull.Value });
+                parametrosR.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = idEmi });
             }
             else
             {
@@ -569,15 +575,16 @@ namespace WebAppMmassImport.Clases
                 parametrosR.Add(new SqlParameter() { ParameterName = "@tipo_suger", SqlDbType = SqlDbType.Int, Value = 1 });
                 parametrosR.Add(new SqlParameter() { ParameterName = "@hs_desde", SqlDbType = SqlDbType.DateTime, Value = horaD });
                 parametrosR.Add(new SqlParameter() { ParameterName = "@hs_hasta", SqlDbType = SqlDbType.DateTime, Value = horaH });
-            }
-            if (idEmi != 0)
-            {
-                parametrosR.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = idEmi });
-            }
-            else
-            {
                 parametrosR.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = DBNull.Value });
             }
+            //if (idEmi != 0)
+            //{
+            //    parametrosR.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = idEmi });
+            //}
+            //else
+            //{
+            //    parametrosR.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = DBNull.Value });
+            //}
             if (idProd != 0)
             {
                 parametrosR.Add(new SqlParameter() { ParameterName = "@id_producto", SqlDbType = SqlDbType.Int, Value = idProd });
@@ -847,12 +854,13 @@ namespace WebAppMmassImport.Clases
                             { ParameterName="@importe_neto",SqlDbType = SqlDbType.Decimal, Value = dur * precioSeg },
                         };
 
-            if (idProg != 0)
+            if (idProg != 0 && idEmi != 0)
             {
                 parametrosM.Add(new SqlParameter() { ParameterName = "@id_programa", SqlDbType = SqlDbType.Int, Value = idProg });
                 parametrosM.Add(new SqlParameter() { ParameterName = "@tipo_suger", SqlDbType = SqlDbType.Int, Value = 0 });
                 parametrosM.Add(new SqlParameter() { ParameterName = "@horadesde", SqlDbType = SqlDbType.DateTime, Value = DBNull.Value });
                 parametrosM.Add(new SqlParameter() { ParameterName = "@horahasta", SqlDbType = SqlDbType.DateTime, Value = DBNull.Value });
+                parametrosM.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = idEmi });
             }
             else
             {
@@ -860,15 +868,16 @@ namespace WebAppMmassImport.Clases
                 parametrosM.Add(new SqlParameter() { ParameterName = "@tipo_suger", SqlDbType = SqlDbType.Int, Value = 1 });
                 parametrosM.Add(new SqlParameter() { ParameterName = "@horadesde", SqlDbType = SqlDbType.DateTime, Value = hrD });
                 parametrosM.Add(new SqlParameter() { ParameterName = "@horahasta", SqlDbType = SqlDbType.DateTime, Value = hH });
-            }
-            if (idEmi != 0)
-            {
-                parametrosM.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = idEmi });
-            }
-            else
-            {
                 parametrosM.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = DBNull.Value });
             }
+            //if (idEmi != 0)
+            //{
+            //    parametrosM.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = idEmi });
+            //}
+            //else
+            //{
+            //    parametrosM.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = DBNull.Value });
+            //}
             if (idProd != 0)
             {
                 parametrosM.Add(new SqlParameter() { ParameterName = "@id_producto", SqlDbType = SqlDbType.Int, Value = idProd });
@@ -926,13 +935,62 @@ namespace WebAppMmassImport.Clases
             return resultado;
         }
 
+        //public int getEmision(int idProg, string hrDesde, string hrHasta)
+        //{
+        //    string sqlCommand1 = "select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg;
+
+        //    List<int> emisiones = new List<int>();
+        //    int emision;
+        //    DataTable t = DB.Select(sqlCommand1);
+
+        //    foreach (DataRow item in t.Rows)
+        //    {
+        //        emision = DB.DInt(item["id_emisiones_pgma"].ToString());
+
+        //        emisiones.Add(emision);
+        //    }
+
+        //    int resultado = 0;
+        //    foreach (int emi in emisiones)
+        //    {
+        //        string sqlCommand2 = "declare @first datetime set @first = '" + hrDesde + "'" +
+        //                             " declare @second datetime set @second = '" + hrHasta + "'" +
+        //                             " select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg + " and id_emisiones_pgma = " + emi +
+        //                             " and ((cast(cast(cast(@first as time) as datetime) as float) - floor(cast(cast(cast(@first as time) as datetime) as float))) >= " +
+        //                             " (cast(cast(cast(hs_desde as time) as datetime) as float) - floor(cast(cast(cast(hs_desde as time) as datetime) as float))) " +
+        //                             " and(cast(@second as float) - floor(cast(@second as float))) <= (cast(hs_hasta as float) - floor(cast(hs_hasta as float))))";
+
+        //        DataTable t2 = DB.Select(sqlCommand2);
+
+        //        if (t2.Rows.Count == 1)
+        //        {
+        //            resultado = DB.DInt(t2.Rows[0]["id_emisiones_pgma"].ToString());
+        //        }
+        //    }      
+        //    return resultado;
+        //}
+
         public int getEmision(int idProg, string hrDesde, string hrHasta)
         {
-            string sqlCommand1 = "select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg;
+            string periodo = Periodo.ToString(); 
+            string anio = periodo.Substring(0, 4);
+            string mes = periodo.Substring(4, 2);
+            string vigenciaD = anio + "-" + mes + "-" + "01";
+
+            int resultado = 0;
+
+            string sqlCommand = "declare @first datetime set @first = '" + hrDesde + "'" +
+                                    " declare @second datetime set @second = '" + hrHasta + "'" +
+                                    " select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg +
+                                    " and ('" + vigenciaD + "' >= vigencia_desde) and (('" + FechaVencimiento + "' <= vigencia_hasta) or vigencia_hasta is null)" +
+                                    " and((cast(cast(cast(@first as time) as datetime) as float) - floor(cast(cast(cast(@first as time) as datetime) as float))) >=" +
+                                    " (cast(cast(cast(hs_desde as time) as datetime) as float) - floor(cast(cast(cast(hs_desde as time) as datetime) as float)))" +
+                                    " and(cast(cast(cast(@second as time) as datetime) as float) - floor(cast(cast(cast(@second as time) as datetime) as float))) <=" +
+                                    " (cast(cast(cast(hs_hasta as time) as datetime) as float) - floor(cast(cast(cast(hs_hasta as time) as datetime) as float))))";
 
             List<int> emisiones = new List<int>();
             int emision;
-            DataTable t = DB.Select(sqlCommand1);
+            DataTable t = DB.Select(sqlCommand);
 
             foreach (DataRow item in t.Rows)
             {
@@ -941,22 +999,11 @@ namespace WebAppMmassImport.Clases
                 emisiones.Add(emision);
             }
 
-            int resultado = 0;
-            foreach (int emi in emisiones)
+            if (emisiones.Count == 1)
             {
-                string sqlCommand2 = "declare @first datetime set @first = '" + hrDesde + "'" +
-                                     " declare @second datetime set @second = '" + hrHasta + "'" +
-                                     " select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg + " and id_emisiones_pgma = " + emi +
-                                     " and ((cast(@first as float) - floor(cast(@first as float))) >= (cast(hs_desde as float) - floor(cast(hs_desde as float))) " +
-                                     " and (cast(@second as float) - floor(cast(@second as float))) <= (cast(hs_hasta as float) - floor(cast(hs_hasta as float))))";
-
-                DataTable t2 = DB.Select(sqlCommand2);
-
-                if (t2.Rows.Count == 1)
-                {
-                    resultado = DB.DInt(t2.Rows[0]["id_emisiones_pgma"].ToString());
-                }
-            }      
+                resultado = emisiones[0];
+            }
+           
             return resultado;
         }
 

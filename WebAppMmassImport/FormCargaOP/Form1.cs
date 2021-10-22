@@ -104,22 +104,22 @@ namespace FormCargaOP
 
 
                 op.Empresa = "SAPU";
-                op.Estado = 4;
-                op.CUIAgencia = "A2222";
-                op.RazSocAgencia = "Agencia A2";
-                op.CUIAnunciante = "B2222";
-                op.RazSocAnunciante = "Anunciante B2";
-                op.Periodo = 202109;
+                op.Estado = 3;
+                op.CUIAgencia = "DIRECTO";
+                op.RazSocAgencia = "DIRECTO";
+                op.CUIAnunciante = "A36077";
+                op.RazSocAnunciante = "RENAULT ARGENTINA S.A";
+                op.Periodo = 202110;
                 op.Sennal = "LN+";
-                op.NroOP = "7000006003";
-                op.NroOrden = "1";
-                op.IdOPMMASS = 5026;
-                op.MarcaDescripcion = "Producto test 2";
-                op.ResponsableOrden = "Sebastian Rolando";
-                op.Comentarios = "prueba movimiento";
-                op.FechaVencimiento = "2021-09-30";
-                op.CompetitivoDescripcion = "VARIOS";
-                op.TotalGralMenciones = 3;
+                op.NroOP = "7000010479";
+                op.NroOrden = "20.10.21 - 4";
+                op.IdOPMMASS = 0;
+                op.MarcaDescripcion = "CASO DE PRUEBA 6";
+                op.ResponsableOrden = "Valeria Duarte";
+                op.Comentarios = "prueba emisiones 4";
+                op.FechaVencimiento = "2021-10-29";
+                op.CompetitivoDescripcion = "INDUSTRIA AUTOMOTRIZ";
+                op.TotalGralMenciones = 4;
 
                 WSLaNacion.renglon ren1 = new WSLaNacion.renglon();
                 WSLaNacion.renglon ren2 = new WSLaNacion.renglon();
@@ -145,24 +145,24 @@ namespace FormCargaOP
                 //ren2.PrecioSegundo = decimal.Parse(textBox35.Text);
 
                 ren1.NroDeRenglon = 1;
-                ren1.ProgramaDescripcion = "Caminos a la Escuela";
-                ren1.HoraDesdeCompraBloqHorario = "13:00:00";
-                ren1.HoraHastaCompraBloqHorario = "18:00:00";
+                ren1.ProgramaDescripcion = "EL NOTICIERO";
+                ren1.HoraDesdeCompraBloqHorario = "02:00:00";
+                ren1.HoraHastaCompraBloqHorario = "03:59:59";
                 ren1.Duracion = 15;
-                ren1.CodigoMaterial = "1A";
-                ren1.TemaMaterialusar = "M1";
+                ren1.CodigoMaterial = "13354";
+                ren1.TemaMaterialusar = "A_13354_CASO DE PRUEBA _AUTOMOTRIZ_15";
                 ren1.TipoPublicidad = "Tanda";
-                ren1.PrecioSegundo = 1500;
+                ren1.PrecioSegundo = 180;
 
-                ren2.NroDeRenglon = 2;
-                ren2.ProgramaDescripcion = "Caminos a la Escuela";
-                ren2.HoraDesdeCompraBloqHorario = "19:00:00";
-                ren2.HoraHastaCompraBloqHorario = "20:30:00";
-                ren2.Duracion = 35;
-                ren2.CodigoMaterial = "qwerty2";
-                ren2.TemaMaterialusar = "Tema Prueba relacion 1";
-                ren2.TipoPublicidad = "Tanda";
-                ren2.PrecioSegundo = 1800;
+                //ren2.NroDeRenglon = 2;
+                //ren2.ProgramaDescripcion = "Caminos a la Escuela";
+                //ren2.HoraDesdeCompraBloqHorario = "19:00:00";
+                //ren2.HoraHastaCompraBloqHorario = "20:30:00";
+                //ren2.Duracion = 35;
+                //ren2.CodigoMaterial = "qwerty2";
+                //ren2.TemaMaterialusar = "Tema Prueba relacion 1";
+                //ren2.TipoPublicidad = "Tanda";
+                //ren2.PrecioSegundo = 1800;
 
                 WSLaNacion.mencion men1 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men2 = new WSLaNacion.mencion();
@@ -180,9 +180,9 @@ namespace FormCargaOP
                 //men3.DiaDEEmision = textBox33.Text;
                 //men3.TotalMenciones = int.Parse(textBox32.Text);
 
-                men1.Ubicacion = "COL";
-                men1.DiaDEEmision = "2021-09-22";
-                men1.TotalMenciones = 1;
+                men1.Ubicacion = "";
+                men1.DiaDEEmision = "2021-10-21";
+                men1.TotalMenciones = 2;
                 men1.UbicacionManualOrden = 0;
 
                 //men2.Ubicacion = "COL";
@@ -190,8 +190,8 @@ namespace FormCargaOP
                 //men2.TotalMenciones = 2;
                 //men2.UbicacionManualOrden = 0;
 
-                men3.Ubicacion = "CAB";
-                men3.DiaDEEmision = "2021-09-22";
+                men3.Ubicacion = "";
+                men3.DiaDEEmision = "2021-10-22";
                 men3.TotalMenciones = 2;
                 men3.UbicacionManualOrden = 0;
 
@@ -199,13 +199,13 @@ namespace FormCargaOP
                 ren2.Menciones = new WSLaNacion.ArrayOfMencion();
 
                 ren1.Menciones.Add(men1);
-                //ren1.Menciones.Add(men2);
-                ren2.Menciones.Add(men3);
+                ren1.Menciones.Add(men3);
+                //ren2.Menciones.Add(men3);
 
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
                 op.Renglones.Add(ren1);
-                op.Renglones.Add(ren2);
+                //op.Renglones.Add(ren2);
 
 
 
