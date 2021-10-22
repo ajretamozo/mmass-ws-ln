@@ -270,10 +270,11 @@ namespace WebAppMmassImport.Clases
                     DB.Execute(sql, parametroso);
 
                     // Grabo los Renglones...
-                    foreach (renglon elem in Renglones)
-                    {
-                        DB.Execute("delete from menciones where id_detalle = " + elem.NroDeRenglon.ToString() + "and id_op = " + IdOPMMASS.ToString());
-                    }
+                    //foreach (renglon elem in Renglones)
+                    //{
+                    //    DB.Execute("delete from menciones where id_detalle = " + elem.NroDeRenglon.ToString() + "and id_op = " + IdOPMMASS.ToString());
+                    //}
+                    DB.Execute("delete from menciones where id_op = " + IdOPMMASS.ToString());
                     DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString());
 
                     montos mon = new montos();

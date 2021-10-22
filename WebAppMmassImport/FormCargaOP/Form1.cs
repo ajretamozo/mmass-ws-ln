@@ -113,10 +113,10 @@ namespace FormCargaOP
                 op.Sennal = "LN+";
                 op.NroOP = "7000010479";
                 op.NroOrden = "20.10.21 - 4";
-                op.IdOPMMASS = 0;
-                op.MarcaDescripcion = "CASO DE PRUEBA 6";
+                op.IdOPMMASS = 5082;
+                op.MarcaDescripcion = "Renault Verano";
                 op.ResponsableOrden = "Valeria Duarte";
-                op.Comentarios = "prueba emisiones 4";
+                op.Comentarios = "prueba mod 1";
                 op.FechaVencimiento = "2021-10-29";
                 op.CompetitivoDescripcion = "INDUSTRIA AUTOMOTRIZ";
                 op.TotalGralMenciones = 4;
@@ -154,15 +154,15 @@ namespace FormCargaOP
                 ren1.TipoPublicidad = "Tanda";
                 ren1.PrecioSegundo = 180;
 
-                //ren2.NroDeRenglon = 2;
-                //ren2.ProgramaDescripcion = "Caminos a la Escuela";
-                //ren2.HoraDesdeCompraBloqHorario = "19:00:00";
-                //ren2.HoraHastaCompraBloqHorario = "20:30:00";
-                //ren2.Duracion = 35;
-                //ren2.CodigoMaterial = "qwerty2";
-                //ren2.TemaMaterialusar = "Tema Prueba relacion 1";
-                //ren2.TipoPublicidad = "Tanda";
-                //ren2.PrecioSegundo = 1800;
+                ren2.NroDeRenglon = 2;
+                ren2.ProgramaDescripcion = "HORA 17";
+                ren2.HoraDesdeCompraBloqHorario = "17:00:00";
+                ren2.HoraHastaCompraBloqHorario = "18:00:00";
+                ren2.Duracion = 15;
+                ren2.CodigoMaterial = "M2";
+                ren2.TemaMaterialusar = "Tema Prueba error mat";
+                ren2.TipoPublicidad = "Tanda";
+                ren2.PrecioSegundo = 1800;
 
                 WSLaNacion.mencion men1 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men2 = new WSLaNacion.mencion();
@@ -185,27 +185,27 @@ namespace FormCargaOP
                 men1.TotalMenciones = 2;
                 men1.UbicacionManualOrden = 0;
 
-                //men2.Ubicacion = "COL";
-                //men2.DiaDEEmision = "2021-07-05";
-                //men2.TotalMenciones = 2;
-                //men2.UbicacionManualOrden = 0;
+                men2.Ubicacion = "";
+                men2.DiaDEEmision = "2021-10-21";
+                men2.TotalMenciones = 1;
+                men2.UbicacionManualOrden = 0;
 
                 men3.Ubicacion = "";
-                men3.DiaDEEmision = "2021-10-22";
-                men3.TotalMenciones = 2;
+                men3.DiaDEEmision = "2021-10-26";
+                men3.TotalMenciones = 1;
                 men3.UbicacionManualOrden = 0;
 
                 ren1.Menciones = new WSLaNacion.ArrayOfMencion();
                 ren2.Menciones = new WSLaNacion.ArrayOfMencion();
 
                 ren1.Menciones.Add(men1);
-                ren1.Menciones.Add(men3);
+                //ren2.Menciones.Add(men2);
                 //ren2.Menciones.Add(men3);
 
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
-                op.Renglones.Add(ren1);
-                //op.Renglones.Add(ren2);
+                //op.Renglones.Add(ren1);
+                op.Renglones.Add(ren2);
 
 
 
