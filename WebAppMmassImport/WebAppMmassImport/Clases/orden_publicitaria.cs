@@ -75,6 +75,12 @@ namespace WebAppMmassImport.Clases
                 int Anio = int.Parse(periodoStg.Substring(0, 4));
                 int Mes = int.Parse(periodoStg.Substring(4));
                 int nro_orden = 0;
+                //para strings con apóstrofe
+                RazSocAgencia = RazSocAgencia.Replace("'", @"''");
+                RazSocAnunciante = RazSocAnunciante.Replace("'", @"''");
+                Sennal = Sennal.Replace("'", @"''");
+                MarcaDescripcion = MarcaDescripcion.Replace("'", @"''");
+                Comentarios = Comentarios.Replace("'", @"''");
 
                 DB.Execute("if not exists(select * from numerador_op WHERE anio = " + Anio + " and mes = " + Mes +") insert into numerador_op(anio, mes, nro_orden) values(" + Anio + ", " + Mes + ", 0)");
            
@@ -283,6 +289,7 @@ namespace WebAppMmassImport.Clases
 
                     foreach (renglon elem in Renglones)
                     {
+                        elem.ProgramaDescripcion = elem.ProgramaDescripcion.Replace("'", @"''");
                         mon = saveRenglon(elem, Anio, Mes, Id_producto, Id_anunciante, Id_medio, Fecha, fechaVen, nro_orden, Id_empresa);
                         montoTotal += mon.monto;
                         segPag += mon.segundos;
