@@ -237,7 +237,7 @@ namespace WebAppMmassImport.Clases
                 }
                 else if (Estado == 5)
                 {
-                    parametros.Add(new SqlParameter() { ParameterName = "@parairradiar", SqlDbType = SqlDbType.Int, Value = 0 });
+                    parametros.Add(new SqlParameter() { ParameterName = "@parairradiar", SqlDbType = SqlDbType.Int, Value = 1 });
                     parametros.Add(new SqlParameter() { ParameterName = "@es_anulada", SqlDbType = SqlDbType.Int, Value = 0 });
                     parametros.Add(new SqlParameter() { ParameterName = "@fecha_anulada", SqlDbType = SqlDbType.DateTime, Value = DBNull.Value });
                 }
