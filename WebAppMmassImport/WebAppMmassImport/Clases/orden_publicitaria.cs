@@ -96,9 +96,9 @@ namespace WebAppMmassImport.Clases
                 {
                     sql = "insert into orden_pub_ap (id_op, anio, mes, nro_orden, id_empresa, id_medio, fecha, fecha_expiracion, id_agencia, id_anunciante, id_producto, " +
                             " observ, es_anulada, fecha_anulada, nro_orden_imp, parairradiar, fecha_alta, id_concepto_negocio, id_moneda, id_condpagoap, id_tipoorden, id_representacion, " +
-                            "tipo_orden, nro_orden_ag, estadoaprobcred)" +
+                            "tipo_orden, nro_orden_ag, estadoaprobcred, es_preventa)" +
                             " values (@id_op, @anio, @mes, @nro_orden, @id_empresa, @id_medio, @fecha, @fecha_expiracion, @id_agencia, @id_anunciante, @id_producto, " +
-                            " @observ, @es_anulada, @fecha_anulada, @nro_orden_imp, @parairradiar, @fecha_alta, @id_concepto_negocio, @id_moneda, 1, 1, 1, 0, @nro_orden_ag, 1)";
+                            " @observ, @es_anulada, @fecha_anulada, @nro_orden_imp, @parairradiar, @fecha_alta, @id_concepto_negocio, @id_moneda, 1, 1, 1, 0, @nro_orden_ag, 1, @es_preventa)";
 
                     DataTable t = DB.Select("select IsNull(max(id_op),0) as ultimo from orden_pub_ap");
                     if (t.Rows.Count == 1)
@@ -115,7 +115,7 @@ namespace WebAppMmassImport.Clases
                     sql = "update orden_pub_ap set  nro_orden = @nro_orden, id_empresa = @id_empresa, id_medio = @id_medio, fecha = @fecha, fecha_expiracion = @fecha_expiracion, " +
                           "id_agencia = @id_agencia, id_anunciante = @id_anunciante, id_producto = @id_producto, observ = @observ, es_anulada = @es_anulada, fecha_anulada = @fecha_anulada, " +
                           "nro_orden_imp = @nro_orden_imp, parairradiar = @parairradiar, fecha_alta = @fecha_alta, id_concepto_negocio=@id_concepto_negocio, id_moneda=@id_moneda, " +
-                          "id_condpagoap=1, id_tipoorden=1, id_representacion=1, tipo_orden=0, nro_orden_ag=@nro_orden_ag, estadoaprobcred=1 " +
+                          "id_condpagoap=1, id_tipoorden=1, id_representacion=1, tipo_orden=0, nro_orden_ag=@nro_orden_ag, estadoaprobcred=1, es_preventa=0 " +
                           "where id_op = @id_op";
                 }
                 List<SqlParameter> parametros = new List<SqlParameter>();
