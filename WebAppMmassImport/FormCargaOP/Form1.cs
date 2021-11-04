@@ -307,19 +307,19 @@ namespace FormCargaOP
                 op.Estado = 3;
                 op.CUIAgencia = "DIRECTO";
                 op.RazSocAgencia = "DIRECTO";
-                op.CUIAnunciante = "A5000";
-                op.RazSocAnunciante = "tgtggttg";
-                op.Periodo = 202110;
+                op.CUIAnunciante = "A36077";
+                op.RazSocAnunciante = "RENAULT ARGENTINA S.A";
+                op.Periodo = 202111;
                 op.Sennal = "LN+";
-                op.NroOP = "7000010479";
-                op.NroOrden = "20.10.21 - 4";
+                op.NroOP = "7000010482";
+                op.NroOrden = "04.11.21 - 1";
                 op.IdOPMMASS = 0;
                 op.MarcaDescripcion = "Renault Verano";
                 op.ResponsableOrden = "Valeria Duarte";
-                op.Comentarios = "prueba apostrofe 2";
-                op.FechaVencimiento = "2021-10-29";
+                op.Comentarios = "prueba selec emision 3";
+                op.FechaVencimiento = "2021-11-29";
                 op.CompetitivoDescripcion = "INDUSTRIA AUTOMOTRIZ";
-                op.TotalGralMenciones = 4;
+                op.TotalGralMenciones = 3;
 
                 WSLaNacion.renglon ren1 = new WSLaNacion.renglon();
                 WSLaNacion.renglon ren2 = new WSLaNacion.renglon();
@@ -345,24 +345,24 @@ namespace FormCargaOP
                 //ren2.PrecioSegundo = decimal.Parse(textBox35.Text);
 
                 ren1.NroDeRenglon = 1;
-                ren1.ProgramaDescripcion = "EL NOTICIERO";
-                ren1.HoraDesdeCompraBloqHorario = "02:00:00";
-                ren1.HoraHastaCompraBloqHorario = "03:59:59";
-                ren1.Duracion = 15;
-                ren1.CodigoMaterial = "13354";
+                ren1.ProgramaDescripcion = "ODISEA";
+                ren1.HoraDesdeCompraBloqHorario = "";
+                ren1.HoraHastaCompraBloqHorario = "";
+                ren1.Duracion = 10;
+                ren1.CodigoMaterial = "12345";
                 ren1.TemaMaterialusar = "A_13354_CASO DE PRUEBA _AUTOMOTRIZ_15";
                 ren1.TipoPublicidad = "Tanda";
-                ren1.PrecioSegundo = 180;
+                ren1.PrecioSegundo = 200;
 
                 ren2.NroDeRenglon = 2;
-                ren2.ProgramaDescripcion = "HORA 17";
-                ren2.HoraDesdeCompraBloqHorario = "17:00:00";
-                ren2.HoraHastaCompraBloqHorario = "18:00:00";
+                ren2.ProgramaDescripcion = "ODISEA";
+                ren2.HoraDesdeCompraBloqHorario = "04:00:00";
+                ren2.HoraHastaCompraBloqHorario = "4:30:00";
                 ren2.Duracion = 15;
-                ren2.CodigoMaterial = "M2";
-                ren2.TemaMaterialusar = "Tema Prueba error mat";
+                ren2.CodigoMaterial = "12345";
+                ren2.TemaMaterialusar = "A_13354_CASO DE PRUEBA _AUTOMOTRIZ_15";
                 ren2.TipoPublicidad = "Tanda";
-                ren2.PrecioSegundo = 1800;
+                ren2.PrecioSegundo = 1500;
 
                 WSLaNacion.mencion men1 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men2 = new WSLaNacion.mencion();
@@ -381,12 +381,12 @@ namespace FormCargaOP
                 //men3.TotalMenciones = int.Parse(textBox32.Text);
 
                 men1.Ubicacion = "";
-                men1.DiaDEEmision = "2021-10-21";
+                men1.DiaDEEmision = "2021-11-22";
                 men1.TotalMenciones = 2;
                 men1.UbicacionManualOrden = 0;
 
                 men2.Ubicacion = "";
-                men2.DiaDEEmision = "2021-10-21";
+                men2.DiaDEEmision = "2021-11-23";
                 men2.TotalMenciones = 1;
                 men2.UbicacionManualOrden = 0;
 
@@ -399,14 +399,13 @@ namespace FormCargaOP
                 ren2.Menciones = new WSLaNacion.ArrayOfMencion();
 
                 ren1.Menciones.Add(men1);
-                //ren2.Menciones.Add(men2);
+                ren2.Menciones.Add(men2);
                 //ren2.Menciones.Add(men3);
 
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
-                //op.Renglones.Add(ren1);
+                op.Renglones.Add(ren1);
                 op.Renglones.Add(ren2);
-
 
 
                 var respuesta = client.addOrden(op);

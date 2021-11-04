@@ -98,7 +98,7 @@ namespace WebAppMmassImport.Clases
                             " observ, es_anulada, fecha_anulada, nro_orden_imp, parairradiar, fecha_alta, id_concepto_negocio, id_moneda, id_condpagoap, id_tipoorden, id_representacion, " +
                             "tipo_orden, nro_orden_ag, estadoaprobcred, es_preventa)" +
                             " values (@id_op, @anio, @mes, @nro_orden, @id_empresa, @id_medio, @fecha, @fecha_expiracion, @id_agencia, @id_anunciante, @id_producto, " +
-                            " @observ, @es_anulada, @fecha_anulada, @nro_orden_imp, @parairradiar, @fecha_alta, @id_concepto_negocio, @id_moneda, 1, 1, 1, 0, @nro_orden_ag, 1, @es_preventa)";
+                            " @observ, @es_anulada, @fecha_anulada, @nro_orden_imp, @parairradiar, @fecha_alta, @id_concepto_negocio, @id_moneda, 1, 1, 1, 0, @nro_orden_ag, 1, 0)";
 
                     DataTable t = DB.Select("select IsNull(max(id_op),0) as ultimo from orden_pub_ap");
                     if (t.Rows.Count == 1)

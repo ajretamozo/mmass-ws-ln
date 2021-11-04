@@ -245,18 +245,34 @@ namespace WebAppMmassImport
                     //}
                 }
 
-                if (elem.ProgramaDescripcion == "" && (elem.HoraDesdeCompraBloqHorario == "" || elem.HoraHastaCompraBloqHorario == ""))
+                //Modificado para que valide que manden horarios si o si
+
+                //if (elem.ProgramaDescripcion == "" && (elem.HoraDesdeCompraBloqHorario == "" || elem.HoraHastaCompraBloqHorario == ""))
+                //{
+                //        contErr7++;
+                //        if (contErr7 < 2)
+                //        {
+                //            rengErr7 = elem.NroDeRenglon.ToString();
+                //        }
+                //        else
+                //        {
+                //            rengErr7 += ", " + elem.NroDeRenglon;
+                //        }
+                //        error = true;
+                //}
+
+                if (elem.HoraDesdeCompraBloqHorario == "" || elem.HoraHastaCompraBloqHorario == "")
                 {
-                        contErr7++;
-                        if (contErr7 < 2)
-                        {
-                            rengErr7 = elem.NroDeRenglon.ToString();
-                        }
-                        else
-                        {
-                            rengErr7 += ", " + elem.NroDeRenglon;
-                        }
-                        error = true;
+                    contErr7++;
+                    if (contErr7 < 2)
+                    {
+                        rengErr7 = elem.NroDeRenglon.ToString();
+                    }
+                    else
+                    {
+                        rengErr7 += ", " + elem.NroDeRenglon;
+                    }
+                    error = true;
                 }
             }
 
@@ -308,13 +324,21 @@ namespace WebAppMmassImport
             {
                 resp.Descripcion += " - El Programa enviado en los Renglones " + rengErr6 + " no existe";
             }
+            //if (contErr7 == 1)
+            //{
+            //    resp.Descripcion += " - Debe enviar Horarios y/o Programa en el Renglón " + rengErr7;
+            //}
+            //else if (contErr7 > 1)
+            //{
+            //    resp.Descripcion += " - Debe enviar Horarios y/o Programa en los Renglones " + rengErr7;
+            //}
             if (contErr7 == 1)
             {
-                resp.Descripcion += " - Debe enviar Horarios y/o Programa en el Renglón " + rengErr7;
+                resp.Descripcion += " - Debe enviar Horarios en el Renglón " + rengErr7;
             }
             else if (contErr7 > 1)
             {
-                resp.Descripcion += " - Debe enviar Horarios y/o Programa en los Renglones " + rengErr7;
+                resp.Descripcion += " - Debe enviar Horarios en los Renglones " + rengErr7;
             }
             if (contErr8 == 1)
             {
