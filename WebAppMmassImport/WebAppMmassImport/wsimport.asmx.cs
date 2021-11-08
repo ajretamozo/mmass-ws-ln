@@ -103,6 +103,12 @@ namespace WebAppMmassImport
                 error = true;
             }
 
+            if (registro.FechaVencimiento == "")
+            {
+                resp.Descripcion += " - Debe enviar una Fecha de Vencimiento";
+                error = true;
+            }
+
             int contErr = 0;
             int contErr2 = 0;
             int contErr3 = 0;
@@ -112,6 +118,7 @@ namespace WebAppMmassImport
             int contErr7 = 0;
             int contErr8 = 0;
             int contErr9 = 0;
+
             string rengErr = "";
             string rengErr2 = "";
             string rengErr3 = "";
@@ -120,10 +127,14 @@ namespace WebAppMmassImport
             string rengErr6 = "";
             string rengErr7 = "";
             string rengErr8 = "";
-            string rengErr9 = "";
+            string rengErr9 = "";          
+
 
             foreach (renglon elem in registro.Renglones)
             {
+                int contErr10 = 0;
+                string rengErr10 = "";
+
                 if (elem.TemaMaterialusar == "")
                 {
                     contErr2++;
@@ -210,6 +221,7 @@ namespace WebAppMmassImport
                         }
                         error = true;
                     }
+
                     //COMENTADO PORQUE ESTA VALIDACIÓN YA LA HACEN DESDE NOTABLES
                     //else 
                     //{
@@ -243,6 +255,32 @@ namespace WebAppMmassImport
                     //        error = true;
                     //    }
                     //}
+
+                    foreach (mencion men in elem.Menciones)
+                    {
+                        bool existe = registro.verificarEmision(men.DiaDEEmision, elem.HoraDesdeCompraBloqHorario, elem.HoraHastaCompraBloqHorario, idProg);
+                        if (existe == false)
+                        {
+                            contErr10++;
+                            if (contErr10 < 2)
+                            {
+                                rengErr10 = men.DiaDEEmision;
+                            }
+                            else
+                            {
+                                rengErr10 += ", " + men.DiaDEEmision;
+                            }
+                            error = true;
+                        }
+                    }
+                    if (contErr10 == 1)
+                    {
+                        resp.Descripcion += " - No se encontraron Emisiones del Programa enviado para la Mención " + rengErr10 + " del Renglón " + elem.NroDeRenglon.ToString();
+                    }
+                    else if (contErr10 > 1)
+                    {
+                        resp.Descripcion += " - No se encontraron Emisiones del Programa enviado para las Menciones " + rengErr10 + " del Renglón " + elem.NroDeRenglon.ToString();
+                    }
                 }
 
                 //Modificado para que valide que manden horarios si o si
@@ -356,6 +394,7 @@ namespace WebAppMmassImport
             {
                 resp.Descripcion += " - Los Horarios enviados en los Renglones " + rengErr9 + " deben estar contenidos en por lo menos una de las emisiones de los Programas enviados";
             }
+
 
             if (error == false)
             {

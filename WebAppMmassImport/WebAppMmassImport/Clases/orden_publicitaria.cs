@@ -133,11 +133,11 @@ namespace WebAppMmassImport.Clases
 
                 if (NroOrden == "")
                 {
-                    parametros.Add(new SqlParameter() { ParameterName = "@nro_orden_ag", SqlDbType = SqlDbType.Int, Value = 0 });
+                    parametros.Add(new SqlParameter() { ParameterName = "@nro_orden_ag", SqlDbType = SqlDbType.NVarChar, Value = "0" });
                 }
                 else
                 {
-                    parametros.Add(new SqlParameter() { ParameterName = "@nro_orden_ag", SqlDbType = SqlDbType.Int, Value = DB.DInt(NroOrden) });
+                    parametros.Add(new SqlParameter() { ParameterName = "@nro_orden_ag", SqlDbType = SqlDbType.NVarChar, Value = NroOrden });
                 }
 
                 int Id_empresa = getIdEmpresa(Empresa);
@@ -1077,6 +1077,63 @@ namespace WebAppMmassImport.Clases
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+            return resultado;
+        }
+
+        public bool verificarEmision(string diaEmision, string horaDesde, string horaHasta, int idProg)
+        {
+            DateTime diaSem = Convert.ToDateTime(diaEmision);
+            int diaNum = (int)diaSem.DayOfWeek;
+            string dia = "";
+           
+            switch (diaNum)
+            {
+                case 1:
+                    dia = "lun";
+                    break;
+                case 2:
+                    dia = "mar";
+                    break;
+                case 3:
+                    dia = "mie";
+                    break;
+                case 4:
+                    dia = "jue";
+                    break;
+                case 5:
+                    dia = "vie";
+                    break;
+                case 6:
+                    dia = "sab";
+                    break;
+                case 0:
+                    dia = "dom";
+                    break;
+            }
+
+            string periodo = Periodo.ToString();
+            string anio = periodo.Substring(0, 4);
+            string mes = periodo.Substring(4, 2);
+            string vigenciaD = anio + "-" + mes + "-" + "01";
+
+            bool resultado = false;
+
+            string sql = "declare @first datetime set @first = '" + horaDesde + "'" +
+                                    " declare @second datetime set @second = '" + horaHasta + "'" +
+                                    " select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg +
+                                    " and ('" + vigenciaD + "' >= vigencia_desde) and (('" + FechaVencimiento + "' <= vigencia_hasta) or vigencia_hasta is null)" +
+                                    " and((cast(cast(cast(@first as time) as datetime) as float) - floor(cast(cast(cast(@first as time) as datetime) as float))) >=" +
+                                    " (cast(cast(cast(hs_desde as time) as datetime) as float) - floor(cast(cast(cast(hs_desde as time) as datetime) as float)))" +
+                                    " and(cast(cast(cast(@second as time) as datetime) as float) - floor(cast(cast(cast(@second as time) as datetime) as float))) <=" +
+                                    " (cast(cast(cast(hs_hasta as time) as datetime) as float) - floor(cast(cast(cast(hs_hasta as time) as datetime) as float))))" +
+                                    " and " + dia + "=1";
+
+            DataTable t = DB.Select(sql);
+
+            if (t.Rows.Count == 1)
+            {
+                resultado = true;
             }
             return resultado;
         }

@@ -311,12 +311,12 @@ namespace FormCargaOP
                 op.RazSocAnunciante = "RENAULT ARGENTINA S.A";
                 op.Periodo = 202111;
                 op.Sennal = "LN+";
-                op.NroOP = "7000010482";
+                op.NroOP = "7000010486";
                 op.NroOrden = "04.11.21 - 1";
                 op.IdOPMMASS = 0;
                 op.MarcaDescripcion = "Renault Verano";
                 op.ResponsableOrden = "Valeria Duarte";
-                op.Comentarios = "prueba selec emision 3";
+                op.Comentarios = "prueba selec emision 6";
                 op.FechaVencimiento = "2021-11-29";
                 op.CompetitivoDescripcion = "INDUSTRIA AUTOMOTRIZ";
                 op.TotalGralMenciones = 3;
@@ -346,8 +346,8 @@ namespace FormCargaOP
 
                 ren1.NroDeRenglon = 1;
                 ren1.ProgramaDescripcion = "ODISEA";
-                ren1.HoraDesdeCompraBloqHorario = "";
-                ren1.HoraHastaCompraBloqHorario = "";
+                ren1.HoraDesdeCompraBloqHorario = "04:00:00";
+                ren1.HoraHastaCompraBloqHorario = "05:59:59";
                 ren1.Duracion = 10;
                 ren1.CodigoMaterial = "12345";
                 ren1.TemaMaterialusar = "A_13354_CASO DE PRUEBA _AUTOMOTRIZ_15";
@@ -356,8 +356,8 @@ namespace FormCargaOP
 
                 ren2.NroDeRenglon = 2;
                 ren2.ProgramaDescripcion = "ODISEA";
-                ren2.HoraDesdeCompraBloqHorario = "04:00:00";
-                ren2.HoraHastaCompraBloqHorario = "4:30:00";
+                ren2.HoraDesdeCompraBloqHorario = "22:00:00";
+                ren2.HoraHastaCompraBloqHorario = "23:00:00";
                 ren2.Duracion = 15;
                 ren2.CodigoMaterial = "12345";
                 ren2.TemaMaterialusar = "A_13354_CASO DE PRUEBA _AUTOMOTRIZ_15";
@@ -367,6 +367,7 @@ namespace FormCargaOP
                 WSLaNacion.mencion men1 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men2 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men3 = new WSLaNacion.mencion();
+                WSLaNacion.mencion men4 = new WSLaNacion.mencion();
 
                 //men1.Ubicacion = textBox26.Text;
                 //men1.DiaDEEmision = textBox25.Text;
@@ -381,25 +382,33 @@ namespace FormCargaOP
                 //men3.TotalMenciones = int.Parse(textBox32.Text);
 
                 men1.Ubicacion = "";
-                men1.DiaDEEmision = "2021-11-22";
-                men1.TotalMenciones = 2;
+                men1.DiaDEEmision = "2021-11-01";
+                men1.TotalMenciones = 1;
                 men1.UbicacionManualOrden = 0;
 
                 men2.Ubicacion = "";
-                men2.DiaDEEmision = "2021-11-23";
+                men2.DiaDEEmision = "2021-11-08";
                 men2.TotalMenciones = 1;
                 men2.UbicacionManualOrden = 0;
 
                 men3.Ubicacion = "";
-                men3.DiaDEEmision = "2021-10-26";
+                men3.DiaDEEmision = "2021-11-18";
                 men3.TotalMenciones = 1;
                 men3.UbicacionManualOrden = 0;
+
+                men4.Ubicacion = "";
+                men4.DiaDEEmision = "2021-11-22";
+                men4.TotalMenciones = 1;
+                men4.UbicacionManualOrden = 0;
 
                 ren1.Menciones = new WSLaNacion.ArrayOfMencion();
                 ren2.Menciones = new WSLaNacion.ArrayOfMencion();
 
                 ren1.Menciones.Add(men1);
-                ren2.Menciones.Add(men2);
+                ren1.Menciones.Add(men2);
+                ren2.Menciones.Add(men3);
+                ren2.Menciones.Add(men4);
+                //ren2.Menciones.Add(men2);
                 //ren2.Menciones.Add(men3);
 
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
