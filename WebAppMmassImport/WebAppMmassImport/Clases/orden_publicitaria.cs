@@ -82,18 +82,27 @@ namespace WebAppMmassImport.Clases
                 MarcaDescripcion = MarcaDescripcion.Replace("'", @"''");
                 Comentarios = Comentarios.Replace("'", @"''");
 
-                DB.Execute("if not exists(select * from numerador_op WHERE anio = " + Anio + " and mes = " + Mes +") insert into numerador_op(anio, mes, nro_orden) values(" + Anio + ", " + Mes + ", 0)");
+                //DB.Execute("if not exists(select * from numerador_op WHERE anio = " + Anio + " and mes = " + Mes +") insert into numerador_op(anio, mes, nro_orden) values(" + Anio + ", " + Mes + ", 0)");
            
-                DataTable dt = DB.Select("SELECT Isnull(MAX(IsNull(nro_orden, 0)), 0) + 1 as ultimo FROM numerador_op WHERE anio = " + Anio + " and mes = " + Mes);
-                if (dt.Rows.Count == 1)
-                {
-                    nro_orden = int.Parse(dt.Rows[0]["ultimo"].ToString());      
-                }
-                DB.Execute("UPDATE numerador_op SET nro_orden = " + nro_orden + "  WHERE anio = " + Anio + " and mes = " + Mes);
+                //DataTable dt = DB.Select("SELECT Isnull(MAX(IsNull(nro_orden, 0)), 0) + 1 as ultimo FROM numerador_op WHERE anio = " + Anio + " and mes = " + Mes);
+                //if (dt.Rows.Count == 1)
+                //{
+                //    nro_orden = int.Parse(dt.Rows[0]["ultimo"].ToString());      
+                //}
+                //DB.Execute("UPDATE numerador_op SET nro_orden = " + nro_orden + "  WHERE anio = " + Anio + " and mes = " + Mes);
 
                 // Si es nuevo va insert, sino update
                 if (IdOPMMASS == 0)
                 {
+                    DB.Execute("if not exists(select * from numerador_op WHERE anio = " + Anio + " and mes = " + Mes + ") insert into numerador_op(anio, mes, nro_orden) values(" + Anio + ", " + Mes + ", 0)");
+
+                    DataTable dt = DB.Select("SELECT Isnull(MAX(IsNull(nro_orden, 0)), 0) + 1 as ultimo FROM numerador_op WHERE anio = " + Anio + " and mes = " + Mes);
+                    if (dt.Rows.Count == 1)
+                    {
+                        nro_orden = int.Parse(dt.Rows[0]["ultimo"].ToString());
+                    }
+                    DB.Execute("UPDATE numerador_op SET nro_orden = " + nro_orden + "  WHERE anio = " + Anio + " and mes = " + Mes);
+
                     sql = "insert into orden_pub_ap (id_op, anio, mes, nro_orden, id_empresa, id_medio, fecha, fecha_expiracion, id_agencia, id_anunciante, id_producto, " +
                             " observ, es_anulada, fecha_anulada, nro_orden_imp, parairradiar, fecha_alta, id_concepto_negocio, id_moneda, id_condpagoap, id_tipoorden, id_representacion, " +
                             "tipo_orden, nro_orden_ag, estadoaprobcred, es_preventa)" +
@@ -112,7 +121,7 @@ namespace WebAppMmassImport.Clases
 
                 else
                 {
-                    sql = "update orden_pub_ap set  nro_orden = @nro_orden, id_empresa = @id_empresa, id_medio = @id_medio, fecha = @fecha, fecha_expiracion = @fecha_expiracion, " +
+                    sql = "update orden_pub_ap set id_empresa = @id_empresa, id_medio = @id_medio, fecha = @fecha, fecha_expiracion = @fecha_expiracion, " +
                           "id_agencia = @id_agencia, id_anunciante = @id_anunciante, id_producto = @id_producto, observ = @observ, es_anulada = @es_anulada, fecha_anulada = @fecha_anulada, " +
                           "nro_orden_imp = @nro_orden_imp, parairradiar = @parairradiar, fecha_alta = @fecha_alta, id_concepto_negocio=@id_concepto_negocio, id_moneda=@id_moneda, " +
                           "id_condpagoap=1, id_tipoorden=1, id_representacion=1, tipo_orden=0, nro_orden_ag=@nro_orden_ag, estadoaprobcred=1, es_preventa=0 " +

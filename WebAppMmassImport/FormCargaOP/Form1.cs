@@ -311,13 +311,13 @@ namespace FormCargaOP
                 op.RazSocAnunciante = "RENAULT ARGENTINA S.A";
                 op.Periodo = 202111;
                 op.Sennal = "LN+";
-                op.NroOP = "7000010486";
-                op.NroOrden = "04.11.21 - 1";
-                op.IdOPMMASS = 0;
+                op.NroOP = "7000010499";
+                op.NroOrden = "11.11.21 - 1";
+                op.IdOPMMASS = 5259;
                 op.MarcaDescripcion = "Renault Verano";
                 op.ResponsableOrden = "Valeria Duarte";
-                op.Comentarios = "prueba selec emision 6";
-                op.FechaVencimiento = "2021-11-29";
+                op.Comentarios = "prueba update elim";
+                op.FechaVencimiento = "2021-11-30";
                 op.CompetitivoDescripcion = "INDUSTRIA AUTOMOTRIZ";
                 op.TotalGralMenciones = 3;
 
@@ -345,9 +345,9 @@ namespace FormCargaOP
                 //ren2.PrecioSegundo = decimal.Parse(textBox35.Text);
 
                 ren1.NroDeRenglon = 1;
-                ren1.ProgramaDescripcion = "ODISEA";
-                ren1.HoraDesdeCompraBloqHorario = "04:00:00";
-                ren1.HoraHastaCompraBloqHorario = "05:59:59";
+                ren1.ProgramaDescripcion = "+DATA";
+                ren1.HoraDesdeCompraBloqHorario = "13:00:00";
+                ren1.HoraHastaCompraBloqHorario = "14:59:59";
                 ren1.Duracion = 10;
                 ren1.CodigoMaterial = "12345";
                 ren1.TemaMaterialusar = "A_13354_CASO DE PRUEBA _AUTOMOTRIZ_15";
@@ -382,12 +382,12 @@ namespace FormCargaOP
                 //men3.TotalMenciones = int.Parse(textBox32.Text);
 
                 men1.Ubicacion = "";
-                men1.DiaDEEmision = "2021-11-01";
-                men1.TotalMenciones = 1;
+                men1.DiaDEEmision = "2021-11-24";
+                men1.TotalMenciones = 2;
                 men1.UbicacionManualOrden = 0;
 
                 men2.Ubicacion = "";
-                men2.DiaDEEmision = "2021-11-08";
+                men2.DiaDEEmision = "2021-11-25";
                 men2.TotalMenciones = 1;
                 men2.UbicacionManualOrden = 0;
 
@@ -414,7 +414,7 @@ namespace FormCargaOP
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
                 op.Renglones.Add(ren1);
-                op.Renglones.Add(ren2);
+                //op.Renglones.Add(ren2);
 
 
                 var respuesta = client.addOrden(op);
