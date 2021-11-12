@@ -109,6 +109,12 @@ namespace WebAppMmassImport
                 error = true;
             }
 
+            if (registro.Estado == 4 && registro.comprobarMenLevantadas() == true)
+            {
+                resp.Descripcion += " - No se puede anular la OP porque contiene Menciones en Rutina";
+                error = true;
+            }
+
             int contErr = 0;
             int contErr2 = 0;
             int contErr3 = 0;

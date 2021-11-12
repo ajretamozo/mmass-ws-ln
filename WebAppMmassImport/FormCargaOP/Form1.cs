@@ -313,13 +313,13 @@ namespace FormCargaOP
                 op.Sennal = "LN+";
                 op.NroOP = "7000010499";
                 op.NroOrden = "11.11.21 - 1";
-                op.IdOPMMASS = 5259;
+                op.IdOPMMASS = 5266;
                 op.MarcaDescripcion = "Renault Verano";
                 op.ResponsableOrden = "Valeria Duarte";
-                op.Comentarios = "prueba update elim";
+                op.Comentarios = "prueba no borrar men ant 4 upd";
                 op.FechaVencimiento = "2021-11-30";
                 op.CompetitivoDescripcion = "INDUSTRIA AUTOMOTRIZ";
-                op.TotalGralMenciones = 3;
+                op.TotalGralMenciones = 6;
 
                 WSLaNacion.renglon ren1 = new WSLaNacion.renglon();
                 WSLaNacion.renglon ren2 = new WSLaNacion.renglon();
@@ -345,9 +345,9 @@ namespace FormCargaOP
                 //ren2.PrecioSegundo = decimal.Parse(textBox35.Text);
 
                 ren1.NroDeRenglon = 1;
-                ren1.ProgramaDescripcion = "+DATA";
-                ren1.HoraDesdeCompraBloqHorario = "13:00:00";
-                ren1.HoraHastaCompraBloqHorario = "14:59:59";
+                ren1.ProgramaDescripcion = "ODISEA";
+                ren1.HoraDesdeCompraBloqHorario = "22:00:00";
+                ren1.HoraHastaCompraBloqHorario = "23:59:59";
                 ren1.Duracion = 10;
                 ren1.CodigoMaterial = "12345";
                 ren1.TemaMaterialusar = "A_13354_CASO DE PRUEBA _AUTOMOTRIZ_15";
@@ -356,8 +356,8 @@ namespace FormCargaOP
 
                 ren2.NroDeRenglon = 2;
                 ren2.ProgramaDescripcion = "ODISEA";
-                ren2.HoraDesdeCompraBloqHorario = "22:00:00";
-                ren2.HoraHastaCompraBloqHorario = "23:00:00";
+                ren2.HoraDesdeCompraBloqHorario = "04:00:00";
+                ren2.HoraHastaCompraBloqHorario = "05:30:00";
                 ren2.Duracion = 15;
                 ren2.CodigoMaterial = "12345";
                 ren2.TemaMaterialusar = "A_13354_CASO DE PRUEBA _AUTOMOTRIZ_15";
@@ -382,22 +382,22 @@ namespace FormCargaOP
                 //men3.TotalMenciones = int.Parse(textBox32.Text);
 
                 men1.Ubicacion = "";
-                men1.DiaDEEmision = "2021-11-24";
+                men1.DiaDEEmision = "2021-11-08";
                 men1.TotalMenciones = 2;
                 men1.UbicacionManualOrden = 0;
 
                 men2.Ubicacion = "";
-                men2.DiaDEEmision = "2021-11-25";
+                men2.DiaDEEmision = "2021-11-15";
                 men2.TotalMenciones = 1;
                 men2.UbicacionManualOrden = 0;
 
                 men3.Ubicacion = "";
-                men3.DiaDEEmision = "2021-11-18";
-                men3.TotalMenciones = 1;
+                men3.DiaDEEmision = "2021-11-22";
+                men3.TotalMenciones = 2;
                 men3.UbicacionManualOrden = 0;
 
                 men4.Ubicacion = "";
-                men4.DiaDEEmision = "2021-11-22";
+                men4.DiaDEEmision = "2021-11-16";
                 men4.TotalMenciones = 1;
                 men4.UbicacionManualOrden = 0;
 
@@ -406,7 +406,7 @@ namespace FormCargaOP
 
                 ren1.Menciones.Add(men1);
                 ren1.Menciones.Add(men2);
-                ren2.Menciones.Add(men3);
+                ren1.Menciones.Add(men3);
                 ren2.Menciones.Add(men4);
                 //ren2.Menciones.Add(men2);
                 //ren2.Menciones.Add(men3);
@@ -414,7 +414,7 @@ namespace FormCargaOP
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
                 op.Renglones.Add(ren1);
-                //op.Renglones.Add(ren2);
+                op.Renglones.Add(ren2);
 
 
                 var respuesta = client.addOrden(op);

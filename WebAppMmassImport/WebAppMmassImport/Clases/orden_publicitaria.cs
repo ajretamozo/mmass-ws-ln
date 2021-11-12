@@ -75,21 +75,13 @@ namespace WebAppMmassImport.Clases
                 int Anio = int.Parse(periodoStg.Substring(0, 4));
                 int Mes = int.Parse(periodoStg.Substring(4));
                 int nro_orden = 0;
+                bool esUpdate = false;
                 //para strings con apóstrofe
                 RazSocAgencia = RazSocAgencia.Replace("'", @"''");
                 RazSocAnunciante = RazSocAnunciante.Replace("'", @"''");
                 Sennal = Sennal.Replace("'", @"''");
                 MarcaDescripcion = MarcaDescripcion.Replace("'", @"''");
                 Comentarios = Comentarios.Replace("'", @"''");
-
-                //DB.Execute("if not exists(select * from numerador_op WHERE anio = " + Anio + " and mes = " + Mes +") insert into numerador_op(anio, mes, nro_orden) values(" + Anio + ", " + Mes + ", 0)");
-           
-                //DataTable dt = DB.Select("SELECT Isnull(MAX(IsNull(nro_orden, 0)), 0) + 1 as ultimo FROM numerador_op WHERE anio = " + Anio + " and mes = " + Mes);
-                //if (dt.Rows.Count == 1)
-                //{
-                //    nro_orden = int.Parse(dt.Rows[0]["ultimo"].ToString());      
-                //}
-                //DB.Execute("UPDATE numerador_op SET nro_orden = " + nro_orden + "  WHERE anio = " + Anio + " and mes = " + Mes);
 
                 // Si es nuevo va insert, sino update
                 if (IdOPMMASS == 0)
@@ -118,10 +110,16 @@ namespace WebAppMmassImport.Clases
                     }
                 }
 
-
                 else
                 {
-                    sql = "update orden_pub_ap set id_empresa = @id_empresa, id_medio = @id_medio, fecha = @fecha, fecha_expiracion = @fecha_expiracion, " +
+                    esUpdate = true;
+                    DataTable dt = DB.Select("SELECT nro_orden FROM orden_pub_ap WHERE id_op = " + IdOPMMASS);
+                    if (dt.Rows.Count == 1)
+                    {
+                        nro_orden = int.Parse(dt.Rows[0]["nro_orden"].ToString());
+                    }
+
+                    sql = "update orden_pub_ap set nro_orden = @nro_orden, id_empresa = @id_empresa, id_medio = @id_medio, fecha = @fecha, fecha_expiracion = @fecha_expiracion, " +
                           "id_agencia = @id_agencia, id_anunciante = @id_anunciante, id_producto = @id_producto, observ = @observ, es_anulada = @es_anulada, fecha_anulada = @fecha_anulada, " +
                           "nro_orden_imp = @nro_orden_imp, parairradiar = @parairradiar, fecha_alta = @fecha_alta, id_concepto_negocio=@id_concepto_negocio, id_moneda=@id_moneda, " +
                           "id_condpagoap=1, id_tipoorden=1, id_representacion=1, tipo_orden=0, nro_orden_ag=@nro_orden_ag, estadoaprobcred=1, es_preventa=0 " +
@@ -289,8 +287,8 @@ namespace WebAppMmassImport.Clases
                     //{
                     //    DB.Execute("delete from menciones where id_detalle = " + elem.NroDeRenglon.ToString() + "and id_op = " + IdOPMMASS.ToString());
                     //}
-                    DB.Execute("delete from menciones where id_op = " + IdOPMMASS.ToString());
-                    DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString());
+                    DB.Execute("delete from menciones where fecharutina > GETDATE() and id_op = " + IdOPMMASS.ToString());
+                    //DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString());
 
                     montos mon = new montos();
                     double montoTotal = 0;
@@ -299,7 +297,7 @@ namespace WebAppMmassImport.Clases
                     foreach (renglon elem in Renglones)
                     {
                         elem.ProgramaDescripcion = elem.ProgramaDescripcion.Replace("'", @"''");
-                        mon = saveRenglon(elem, Anio, Mes, Id_producto, Id_anunciante, Id_medio, Fecha, fechaVen, nro_orden, Id_empresa);
+                        mon = saveRenglon(elem, Anio, Mes, Id_producto, Id_anunciante, Id_medio, Fecha, fechaVen, nro_orden, Id_empresa, esUpdate);
                         montoTotal += mon.monto;
                         segPag += mon.segundos;
                     }
@@ -368,7 +366,14 @@ namespace WebAppMmassImport.Clases
                     transaccion.Complete();
                 }
                 resp.Estado = "OK";
-                resp.Descripcion = "La Orden se envió con exito";
+                if (Estado == 4)
+                {
+                    resp.Descripcion = "La Orden se anuló con exito";
+                }
+                else
+                {
+                    resp.Descripcion = "La Orden se envió con exito";
+                }                
                 resp.Id = IdOPMMASS;
             }
             catch (Exception ex)
@@ -501,15 +506,40 @@ namespace WebAppMmassImport.Clases
         }
 
  
-        public montos saveRenglon(renglon reng, int anio, int mes, int idProd, int idAnun, int idMedio, DateTime fechaD, DateTime fechaH, int nro_orden, int idEmpresa)
+        public montos saveRenglon(renglon reng, int anio, int mes, int idProd, int idAnun, int idMedio, DateTime fechaD, DateTime fechaH, int nro_orden, int idEmpresa, bool esUpdate)
         {
             montos mon = new montos();
 
-            string sql = "insert into orden_pub_as(id_op, anio, mes, nro_orden, id_detalle, id_programa, id_producto, hs_desde, hs_hasta, duracion, id_anunciante, id_medio, imp_tarifa, cod_material, " +
-                         "id_tema, es_pnt, tipo_sel_ubicacion, fecha_desde, fecha_hasta, id_categoria, id_categoria_ubi, tipo_tarifa, clase_tarifa, id_tarifa, tipo_suger, id_duracion, formausotarifa, " +
-                         "id_empresa, id_estadoaprobacion, id_usuario_aprob, fecha_aprob, tar_formauso, id_emisiones_pgma) " +
-                         "values (@id_op, @anio, @mes, @nro_orden, @id_detalle, @id_programa, @id_producto, @hs_desde, @hs_hasta, @duracion, @id_anunciante, @id_medio, @imp_tarifa, @cod_material," +
-                         " @id_tema, @es_pnt, 0, @fecha_desde, @fecha_hasta, @id_categoria, @id_categoria_ubi, 3, 0, 1, @tipo_suger, 1, 0, @id_empresa, 4, 1, @fecha_aprob, 0, @id_emisiones_pgma)";
+            string sqlCommand1 = "select id_detalle from orden_pub_as where id_op = " + IdOPMMASS + " and id_detalle = " + reng.NroDeRenglon;
+
+            bool esUpdateRen = false;
+            DataTable t1 = DB.Select(sqlCommand1);
+
+            if (t1.Rows.Count == 1)
+            {
+                esUpdateRen = true;
+            }
+
+            string sql = "";
+
+            if (esUpdateRen == false)
+            {
+                sql = "insert into orden_pub_as(id_op, anio, mes, nro_orden, id_detalle, id_programa, id_producto, hs_desde, hs_hasta, duracion, id_anunciante, id_medio, imp_tarifa, cod_material, " +
+                      "id_tema, es_pnt, tipo_sel_ubicacion, fecha_desde, fecha_hasta, id_categoria, id_categoria_ubi, tipo_tarifa, clase_tarifa, id_tarifa, tipo_suger, id_duracion, formausotarifa, " +
+                      "id_empresa, id_estadoaprobacion, id_usuario_aprob, fecha_aprob, tar_formauso, id_emisiones_pgma) " +
+                      "values (@id_op, @anio, @mes, @nro_orden, @id_detalle, @id_programa, @id_producto, @hs_desde, @hs_hasta, @duracion, @id_anunciante, @id_medio, @imp_tarifa, @cod_material," +
+                      " @id_tema, @es_pnt, 0, @fecha_desde, @fecha_hasta, @id_categoria, @id_categoria_ubi, 3, 0, 1, @tipo_suger, 1, 0, @id_empresa, 4, 1, @fecha_aprob, 0, @id_emisiones_pgma)";
+            }
+            else
+            {
+                sql = "update orden_pub_as set id_programa=@id_programa, id_producto=@id_producto, " +
+                      "hs_desde=@hs_desde, hs_hasta=@hs_hasta, duracion=@duracion, id_anunciante=@id_anunciante, id_medio=@id_medio, imp_tarifa=@imp_tarifa, cod_material=@cod_material, " +
+                      "id_tema=@id_tema, es_pnt=@es_pnt, tipo_sel_ubicacion=0, fecha_desde=@fecha_desde, fecha_hasta=@fecha_hasta, id_categoria=@id_categoria, id_categoria_ubi=@id_categoria_ubi, " +
+                      "tipo_tarifa=3, clase_tarifa=0, id_tarifa=1, tipo_suger=@tipo_suger, id_duracion=1, formausotarifa=0, " +
+                      "id_empresa=@id_empresa, id_estadoaprobacion=4, id_usuario_aprob=1, fecha_aprob=@fecha_aprob, tar_formauso=0, id_emisiones_pgma=@id_emisiones_pgma " +
+                      "where id_op = " + IdOPMMASS + " and id_detalle = " + reng.NroDeRenglon ;
+            }
+
 
             int idProg = comprobarPrograma(reng.ProgramaDescripcion);
             int idEmi = 0;
@@ -629,12 +659,31 @@ namespace WebAppMmassImport.Clases
                 {
                     contadorSpots += elem.TotalMenciones;
                     int cont = 0;
-                    while (cont < elem.TotalMenciones)
+                    
+                    if (esUpdateRen == true)
                     {
-                        saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
-                        cont++;
-                        mon.monto += reng.Duracion * reng.PrecioSegundo;
-                    }  
+                        DateTime fechaHoy = DateTime.Now;
+                        DateTime diaDEmision = DateTime.Parse(elem.DiaDEEmision);
+                        while (cont < elem.TotalMenciones)
+                        {
+                            if (diaDEmision > fechaHoy)
+                            {
+                                saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
+                            }
+                            //saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
+                            cont++;
+                            mon.monto += reng.Duracion * reng.PrecioSegundo;
+                        }
+                    }
+                    else
+                    {
+                        while (cont < elem.TotalMenciones)
+                        {
+                            saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
+                            cont++;
+                            mon.monto += reng.Duracion * reng.PrecioSegundo;
+                        }
+                    } 
                 }
                 mon.segundos = contadorSpots * reng.Duracion;
 
@@ -952,41 +1001,6 @@ namespace WebAppMmassImport.Clases
             return resultado;
         }
 
-        //public int getEmision(int idProg, string hrDesde, string hrHasta)
-        //{
-        //    string sqlCommand1 = "select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg;
-
-        //    List<int> emisiones = new List<int>();
-        //    int emision;
-        //    DataTable t = DB.Select(sqlCommand1);
-
-        //    foreach (DataRow item in t.Rows)
-        //    {
-        //        emision = DB.DInt(item["id_emisiones_pgma"].ToString());
-
-        //        emisiones.Add(emision);
-        //    }
-
-        //    int resultado = 0;
-        //    foreach (int emi in emisiones)
-        //    {
-        //        string sqlCommand2 = "declare @first datetime set @first = '" + hrDesde + "'" +
-        //                             " declare @second datetime set @second = '" + hrHasta + "'" +
-        //                             " select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg + " and id_emisiones_pgma = " + emi +
-        //                             " and ((cast(cast(cast(@first as time) as datetime) as float) - floor(cast(cast(cast(@first as time) as datetime) as float))) >= " +
-        //                             " (cast(cast(cast(hs_desde as time) as datetime) as float) - floor(cast(cast(cast(hs_desde as time) as datetime) as float))) " +
-        //                             " and(cast(@second as float) - floor(cast(@second as float))) <= (cast(hs_hasta as float) - floor(cast(hs_hasta as float))))";
-
-        //        DataTable t2 = DB.Select(sqlCommand2);
-
-        //        if (t2.Rows.Count == 1)
-        //        {
-        //            resultado = DB.DInt(t2.Rows[0]["id_emisiones_pgma"].ToString());
-        //        }
-        //    }      
-        //    return resultado;
-        //}
-
         public int getEmision(int idProg, string hrDesde, string hrHasta)
         {
             string periodo = Periodo.ToString(); 
@@ -1140,6 +1154,20 @@ namespace WebAppMmassImport.Clases
 
             DataTable t = DB.Select(sql);
 
+            if (t.Rows.Count == 1)
+            {
+                resultado = true;
+            }
+            return resultado;
+        }
+
+        public bool comprobarMenLevantadas()
+        {
+            string sqlCommand = "select id_menciones from menciones where es_levantada < 2 and id_rutina > 0 and id_op=" + IdOPMMASS;
+
+            bool resultado = false;
+
+            DataTable t = DB.Select(sqlCommand);
             if (t.Rows.Count == 1)
             {
                 resultado = true;
