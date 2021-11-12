@@ -1168,7 +1168,7 @@ namespace WebAppMmassImport.Clases
             bool resultado = false;
 
             DataTable t = DB.Select(sqlCommand);
-            if (t.Rows.Count == 1)
+            if (t.Rows.Count > 0)
             {
                 resultado = true;
             }

@@ -304,7 +304,7 @@ namespace FormCargaOP
 
 
                 op.Empresa = "SAPU";
-                op.Estado = 3;
+                op.Estado = 4;
                 op.CUIAgencia = "DIRECTO";
                 op.RazSocAgencia = "DIRECTO";
                 op.CUIAnunciante = "A36077";
@@ -313,7 +313,7 @@ namespace FormCargaOP
                 op.Sennal = "LN+";
                 op.NroOP = "7000010499";
                 op.NroOrden = "11.11.21 - 1";
-                op.IdOPMMASS = 5266;
+                op.IdOPMMASS = 5272;
                 op.MarcaDescripcion = "Renault Verano";
                 op.ResponsableOrden = "Valeria Duarte";
                 op.Comentarios = "prueba no borrar men ant 4 upd";
