@@ -655,9 +655,31 @@ namespace WebAppMmassImport.Clases
 
                 // Grabo las Menciones...
                 int contadorSpots = 0;
+                if (esUpdateRen == true)
+                {
+                    string sqlCommandM = "select COUNT(id_menciones) as spots from menciones where id_op=" + IdOPMMASS + " and id_detalle=" + reng.NroDeRenglon;
+
+                    DataTable tm = DB.Select(sqlCommandM);
+                    if (tm.Rows.Count == 1)
+                    {
+                        contadorSpots = DB.DInt(tm.Rows[0]["spots"].ToString());
+                    }
+                }
                 foreach (mencion elem in reng.Menciones)
                 {
-                    contadorSpots += elem.TotalMenciones;
+                    if (esUpdateRen == true)
+                    {
+                        DateTime diaEmision = Convert.ToDateTime(elem.DiaDEEmision);
+                        if (diaEmision > DateTime.Today)
+                        {
+                            contadorSpots += elem.TotalMenciones;
+                        }
+                    }
+                    else
+                    {
+                        contadorSpots += elem.TotalMenciones;
+                    }
+ 
                     int cont = 0;
                     
                     if (esUpdateRen == true)
@@ -670,9 +692,8 @@ namespace WebAppMmassImport.Clases
                             {
                                 saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
                             }
-                            //saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
                             cont++;
-                            mon.monto += reng.Duracion * reng.PrecioSegundo;
+                            //mon.monto += reng.Duracion * reng.PrecioSegundo;
                         }
                     }
                     else
@@ -681,11 +702,12 @@ namespace WebAppMmassImport.Clases
                         {
                             saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
                             cont++;
-                            mon.monto += reng.Duracion * reng.PrecioSegundo;
+                            //mon.monto += reng.Duracion * reng.PrecioSegundo;
                         }
                     } 
                 }
                 mon.segundos = contadorSpots * reng.Duracion;
+                mon.monto = mon.segundos * reng.PrecioSegundo;
 
                 string sqlR2 = "update orden_pub_as set cant_spot=@cant_spot, seg_pag=@seg_pag, valor_mencion=@valor_mencion, monto_bruto=@monto_bruto, monto_neto=@monto_neto where id_op = @id_op and anio=@anio and mes=@mes and nro_orden=@nro_orden and id_detalle=@id_detalle";
                 List<SqlParameter> parametrosR2 = new List<SqlParameter>()

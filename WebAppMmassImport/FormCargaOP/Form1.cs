@@ -304,7 +304,7 @@ namespace FormCargaOP
 
 
                 op.Empresa = "SAPU";
-                op.Estado = 4;
+                op.Estado = 3;
                 op.CUIAgencia = "DIRECTO";
                 op.RazSocAgencia = "DIRECTO";
                 op.CUIAnunciante = "A36077";
@@ -313,10 +313,10 @@ namespace FormCargaOP
                 op.Sennal = "LN+";
                 op.NroOP = "7000010499";
                 op.NroOrden = "11.11.21 - 1";
-                op.IdOPMMASS = 5272;
+                op.IdOPMMASS = 5283;
                 op.MarcaDescripcion = "Renault Verano";
                 op.ResponsableOrden = "Valeria Duarte";
-                op.Comentarios = "prueba no borrar men ant 4 upd";
+                op.Comentarios = "prueba calcu montos 5";
                 op.FechaVencimiento = "2021-11-30";
                 op.CompetitivoDescripcion = "INDUSTRIA AUTOMOTRIZ";
                 op.TotalGralMenciones = 6;
@@ -397,7 +397,7 @@ namespace FormCargaOP
                 men3.UbicacionManualOrden = 0;
 
                 men4.Ubicacion = "";
-                men4.DiaDEEmision = "2021-11-16";
+                men4.DiaDEEmision = "2021-11-29";
                 men4.TotalMenciones = 1;
                 men4.UbicacionManualOrden = 0;
 
@@ -407,14 +407,14 @@ namespace FormCargaOP
                 ren1.Menciones.Add(men1);
                 ren1.Menciones.Add(men2);
                 ren1.Menciones.Add(men3);
-                ren2.Menciones.Add(men4);
+                ren1.Menciones.Add(men4);
                 //ren2.Menciones.Add(men2);
                 //ren2.Menciones.Add(men3);
 
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
                 op.Renglones.Add(ren1);
-                op.Renglones.Add(ren2);
+                //op.Renglones.Add(ren2);
 
 
                 var respuesta = client.addOrden(op);
