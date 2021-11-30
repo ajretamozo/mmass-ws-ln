@@ -264,20 +264,25 @@ namespace WebAppMmassImport
 
                     foreach (mencion men in elem.Menciones)
                     {
-                        bool existe = registro.verificarEmision(men.DiaDEEmision, elem.HoraDesdeCompraBloqHorario, elem.HoraHastaCompraBloqHorario, idProg);
-                        if (existe == false)
+                        DateTime diaEmision = Convert.ToDateTime(men.DiaDEEmision);
+                        if (diaEmision > DateTime.Today)
                         {
-                            contErr10++;
-                            if (contErr10 < 2)
+                            bool existe = registro.verificarEmision(men.DiaDEEmision, elem.HoraDesdeCompraBloqHorario, elem.HoraHastaCompraBloqHorario, idProg);
+
+                            if (existe == false)
                             {
-                                rengErr10 = men.DiaDEEmision;
+                                contErr10++;
+                                if (contErr10 < 2)
+                                {
+                                    rengErr10 = men.DiaDEEmision;
+                                }
+                                else
+                                {
+                                    rengErr10 += ", " + men.DiaDEEmision;
+                                }
+                                error = true;
                             }
-                            else
-                            {
-                                rengErr10 += ", " + men.DiaDEEmision;
-                            }
-                            error = true;
-                        }
+                        }    
                     }
                     if (contErr10 == 1)
                     {

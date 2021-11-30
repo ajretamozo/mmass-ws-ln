@@ -288,7 +288,23 @@ namespace WebAppMmassImport.Clases
                     //    DB.Execute("delete from menciones where id_detalle = " + elem.NroDeRenglon.ToString() + "and id_op = " + IdOPMMASS.ToString());
                     //}
                     DB.Execute("delete from menciones where fecharutina > GETDATE() and id_op = " + IdOPMMASS.ToString());
-                    //DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString());
+                    // Limpio Renglones que no tengan Menciones...
+                    String sqlDet = "select id_detalle from orden_pub_as where id_op = " + IdOPMMASS.ToString();
+                    List<int> detalles = new List<int>();
+                    int idDetalle;
+                    DataTable tDet = DB.Select(sqlDet);
+
+                    foreach (DataRow item in tDet.Rows)
+                    {
+                        idDetalle = DB.DInt(item["id_detalle"].ToString());
+                        
+                        string sqlCommand = "select id_menciones from menciones where id_op =" + IdOPMMASS.ToString() + " and id_detalle =" + idDetalle.ToString();
+                        DataTable t = DB.Select(sqlCommand);
+                        if (t.Rows.Count == 0)
+                        {
+                            DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString() + " and id_detalle =" + idDetalle.ToString());
+                        }
+                    }
 
                     montos mon = new montos();
                     double montoTotal = 0;
@@ -624,14 +640,6 @@ namespace WebAppMmassImport.Clases
                 parametrosR.Add(new SqlParameter() { ParameterName = "@hs_hasta", SqlDbType = SqlDbType.DateTime, Value = horaH });
                 parametrosR.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = DBNull.Value });
             }
-            //if (idEmi != 0)
-            //{
-            //    parametrosR.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = idEmi });
-            //}
-            //else
-            //{
-            //    parametrosR.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = DBNull.Value });
-            //}
             if (idProd != 0)
             {
                 parametrosR.Add(new SqlParameter() { ParameterName = "@id_producto", SqlDbType = SqlDbType.Int, Value = idProd });
@@ -958,14 +966,6 @@ namespace WebAppMmassImport.Clases
                 parametrosM.Add(new SqlParameter() { ParameterName = "@horahasta", SqlDbType = SqlDbType.DateTime, Value = hH });
                 parametrosM.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = DBNull.Value });
             }
-            //if (idEmi != 0)
-            //{
-            //    parametrosM.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = idEmi });
-            //}
-            //else
-            //{
-            //    parametrosM.Add(new SqlParameter() { ParameterName = "@id_emisiones_pgma", SqlDbType = SqlDbType.Int, Value = DBNull.Value });
-            //}
             if (idProd != 0)
             {
                 parametrosM.Add(new SqlParameter() { ParameterName = "@id_producto", SqlDbType = SqlDbType.Int, Value = idProd });
@@ -1195,6 +1195,39 @@ namespace WebAppMmassImport.Clases
                 resultado = true;
             }
             return resultado;
+        }
+
+        public void LimpiarDetalles (int idDet)
+        {
+            string sqlCommandz = "select COUNT(*) as cantMen from orden_pub_as ops inner join menciones m on m.id_op = ops.id_op and m.id_detalle = ops.id_detalle where ops.id_op = @id_op and ops.id_detalle = @id_detalle";
+
+            List<SqlParameter> parametros = new List<SqlParameter>()
+            {
+                new SqlParameter()
+                { ParameterName="@id_op",SqlDbType = SqlDbType.Int, Value = IdOPMMASS },
+                 new SqlParameter()
+                { ParameterName="@id_detalle",SqlDbType = SqlDbType.Int, Value = idDet }
+            };
+
+            DataTable tz = DB.Select(sqlCommandz, parametros);
+            if (tz.Rows.Count == 1)
+            {
+                int cantMen = DB.DInt(tz.Rows[0]["cantMen"].ToString());
+                if (cantMen == 0)
+                {
+                    DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString() + " and id_detalle =" + idDet.ToString());
+                }
+            }
+
+            //foreach (DataRow item in tz.Rows)
+            //{
+            //    int cantMen = DB.DInt(item["cantMen"].ToString());
+
+            //    if (cantMen == 0)
+            //    {
+            //        DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString() + " and ops.id_detalle =" + idDet.ToString());
+            //    }
+            //}
         }
 
     }
