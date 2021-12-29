@@ -308,17 +308,17 @@ namespace FormCargaOP
                 op.RazSocAgencia = "Pirámide Publicidad Creativa de:  Liliana Gladys Reynoso";
                 op.CUIAnunciante = "A00547374";
                 op.RazSocAnunciante = "SANTISTA TEXTIL ARGENTINA S.A";
-                op.Periodo = 202111;
+                op.Periodo = 202112;
                 op.Sennal = "LN+";
                 op.NroOP = "7000011342";
-                op.NroOrden = "1371021";
-                op.IdOPMMASS = 5295;
+                op.NroOrden = "1111111";
+                op.IdOPMMASS = 5301;
                 op.MarcaDescripcion = "CALZADOS OMBU";
                 op.ResponsableOrden = "Silvia Malloggi";
-                op.Comentarios = "prueba cartel emisiones 1";
-                op.FechaVencimiento = "2021-11-30";
+                op.Comentarios = "prueba cambio hr prog 2";
+                op.FechaVencimiento = "2021-12-31";
                 op.CompetitivoDescripcion = "IND. TEXTIL ; MODA ; CALZADO ; RELOJERIA";
-                op.TotalGralMenciones = 10;
+                op.TotalGralMenciones = 4;
 
                 WSLaNacion.renglon ren1 = new WSLaNacion.renglon();
                 WSLaNacion.renglon ren2 = new WSLaNacion.renglon();
@@ -344,9 +344,9 @@ namespace FormCargaOP
                 //ren2.PrecioSegundo = decimal.Parse(textBox35.Text);
 
                 ren1.NroDeRenglon = 1;
-                ren1.ProgramaDescripcion = "+MAÑANA";
-                ren1.HoraDesdeCompraBloqHorario = "06:00:00";
-                ren1.HoraHastaCompraBloqHorario = "09:59:59";
+                ren1.ProgramaDescripcion = "+DATA";
+                ren1.HoraDesdeCompraBloqHorario = "13:00:00";
+                ren1.HoraHastaCompraBloqHorario = "14:30:00";
                 ren1.Duracion = 15;
                 ren1.CodigoMaterial = "14429";
                 ren1.TemaMaterialusar = "A_14429_CALZADOS OMBU_COBALTO_15";
@@ -354,9 +354,9 @@ namespace FormCargaOP
                 ren1.PrecioSegundo = 200.0000;
 
                 ren2.NroDeRenglon = 2;
-                ren2.ProgramaDescripcion = "+MAÑANA";
-                ren2.HoraDesdeCompraBloqHorario = "06:00:00";
-                ren2.HoraHastaCompraBloqHorario = "10:29:59";
+                ren2.ProgramaDescripcion = "+DATA";
+                ren2.HoraDesdeCompraBloqHorario = "15:00:00";
+                ren2.HoraHastaCompraBloqHorario = "16:59:59";
                 ren2.Duracion = 15;
                 ren2.CodigoMaterial = "14429";
                 ren2.TemaMaterialusar = "A_14429_CALZADOS OMBU_COBALTO_15";
@@ -387,22 +387,22 @@ namespace FormCargaOP
                 //men3.TotalMenciones = int.Parse(textBox32.Text);
 
                 men1.Ubicacion = "";
-                men1.DiaDEEmision = "2021-11-06";
+                men1.DiaDEEmision = "2021-12-27";
                 men1.TotalMenciones = 1;
                 men1.UbicacionManualOrden = 0;
 
                 men2.Ubicacion = "";
-                men2.DiaDEEmision = "2021-11-08";
+                men2.DiaDEEmision = "2021-12-29";
                 men2.TotalMenciones = 1;
                 men2.UbicacionManualOrden = 0;
 
                 men3.Ubicacion = "";
-                men3.DiaDEEmision = "2021-11-09";
+                men3.DiaDEEmision = "2021-12-30";
                 men3.TotalMenciones = 1;
                 men3.UbicacionManualOrden = 0;
 
                 men4.Ubicacion = "";
-                men4.DiaDEEmision = "2021-11-10";
+                men4.DiaDEEmision = "2021-12-31";
                 men4.TotalMenciones = 1;
                 men4.UbicacionManualOrden = 0;
 
@@ -443,20 +443,19 @@ namespace FormCargaOP
 
                 ren1.Menciones.Add(men1);
                 ren1.Menciones.Add(men2);
-                ren1.Menciones.Add(men3);
-                ren1.Menciones.Add(men4);
-                ren1.Menciones.Add(men5);
-                ren1.Menciones.Add(men6);
-                ren2.Menciones.Add(men7);
-                //ren2.Menciones.Add(men8);
-                //ren2.Menciones.Add(men9);
+                //ren1.Menciones.Add(men3);
+                //ren1.Menciones.Add(men4);
+                //ren1.Menciones.Add(men5);
+                //ren1.Menciones.Add(men6);
+                //ren2.Menciones.Add(men7);
+                ren2.Menciones.Add(men3);
+                ren2.Menciones.Add(men4);
                 //ren2.Menciones.Add(men10);
 
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
                 op.Renglones.Add(ren1);
-                //op.Renglones.Add(ren2);
-
+                op.Renglones.Add(ren2);
 
                 var respuesta = client.addOrden(op);
 

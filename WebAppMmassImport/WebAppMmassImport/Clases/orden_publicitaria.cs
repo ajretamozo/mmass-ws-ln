@@ -125,6 +125,7 @@ namespace WebAppMmassImport.Clases
                           "id_condpagoap=1, id_tipoorden=1, id_representacion=1, tipo_orden=0, nro_orden_ag=@nro_orden_ag, estadoaprobcred=1, es_preventa=0 " +
                           "where id_op = @id_op";
                 }
+
                 List<SqlParameter> parametros = new List<SqlParameter>();
                 parametros.Add(new SqlParameter() { ParameterName = "@id_op", SqlDbType = SqlDbType.Int, Value = IdOPMMASS });
                 if (Anio != 0)
@@ -1157,17 +1158,17 @@ namespace WebAppMmassImport.Clases
                     break;
             }
 
-            string periodo = Periodo.ToString();
-            string anio = periodo.Substring(0, 4);
-            string mes = periodo.Substring(4, 2);
-            string vigenciaD = anio + "-" + mes + "-" + "01";
+            //string periodo = Periodo.ToString();
+            //string anio = periodo.Substring(0, 4);
+            //string mes = periodo.Substring(4, 2);
+            //string vigenciaD = anio + "-" + mes + "-" + "01";
 
             bool resultado = false;
 
             string sql = "declare @first datetime set @first = '" + horaDesde + "'" +
                                     " declare @second datetime set @second = '" + horaHasta + "'" +
                                     " select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg +
-                                    " and ('" + vigenciaD + "' >= vigencia_desde) and (('" + FechaVencimiento + "' <= vigencia_hasta) or vigencia_hasta is null)" +
+                                    " and ('" + diaEmision + "' >= vigencia_desde) and (('" + diaEmision + "' <= vigencia_hasta) or vigencia_hasta is null)" +
                                     " and((cast(cast(cast(@first as time) as datetime) as float) - floor(cast(cast(cast(@first as time) as datetime) as float))) >=" +
                                     " (cast(cast(cast(hs_desde as time) as datetime) as float) - floor(cast(cast(cast(hs_desde as time) as datetime) as float)))" +
                                     " and(cast(cast(cast(@second as time) as datetime) as float) - floor(cast(cast(cast(@second as time) as datetime) as float))) <=" +
