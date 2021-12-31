@@ -1036,7 +1036,7 @@ namespace WebAppMmassImport.Clases
             string sqlCommand = "declare @first datetime set @first = '" + hrDesde + "'" +
                                     " declare @second datetime set @second = '" + hrHasta + "'" +
                                     " select id_emisiones_pgma from emisiones_pgma where id_programa = " + idProg +
-                                    " and ('" + vigenciaD + "' >= vigencia_desde) and (('" + FechaVencimiento + "' <= vigencia_hasta) or vigencia_hasta is null)" +
+                                    " and ('" + FechaVencimiento + "' >= vigencia_desde) and (('" + vigenciaD + "' <= vigencia_hasta) or vigencia_hasta is null)" +
                                     " and((cast(cast(cast(@first as time) as datetime) as float) - floor(cast(cast(cast(@first as time) as datetime) as float))) >=" +
                                     " (cast(cast(cast(hs_desde as time) as datetime) as float) - floor(cast(cast(cast(hs_desde as time) as datetime) as float)))" +
                                     " and(cast(cast(cast(@second as time) as datetime) as float) - floor(cast(cast(cast(@second as time) as datetime) as float))) <=" +
