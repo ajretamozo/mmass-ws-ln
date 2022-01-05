@@ -69,7 +69,8 @@ namespace WebAppMmassImport.Clases
         {
             respuesta resp = new respuesta();
             try
-            {               
+            {
+                string respuesta = "";
                 string sql = "";
                 string periodoStg = Periodo.ToString();
                 int Anio = int.Parse(periodoStg.Substring(0, 4));
@@ -86,6 +87,8 @@ namespace WebAppMmassImport.Clases
                 // Si es nuevo va insert, sino update
                 if (IdOPMMASS == 0)
                 {
+                    respuesta = "La Orden se envió con exito";
+
                     DB.Execute("if not exists(select * from numerador_op WHERE anio = " + Anio + " and mes = " + Mes + ") insert into numerador_op(anio, mes, nro_orden) values(" + Anio + ", " + Mes + ", 0)");
 
                     DataTable dt = DB.Select("SELECT Isnull(MAX(IsNull(nro_orden, 0)), 0) + 1 as ultimo FROM numerador_op WHERE anio = " + Anio + " and mes = " + Mes);
@@ -112,6 +115,8 @@ namespace WebAppMmassImport.Clases
 
                 else
                 {
+                    respuesta = "La Orden se actualizó con exito";
+
                     esUpdate = true;
                     DataTable dt = DB.Select("SELECT nro_orden FROM orden_pub_ap WHERE id_op = " + IdOPMMASS);
                     if (dt.Rows.Count == 1)
@@ -389,7 +394,7 @@ namespace WebAppMmassImport.Clases
                 }
                 else
                 {
-                    resp.Descripcion = "La Orden se envió con exito";
+                    resp.Descripcion = respuesta;
                 }                
                 resp.Id = IdOPMMASS;
             }

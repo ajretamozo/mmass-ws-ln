@@ -312,10 +312,10 @@ namespace FormCargaOP
                 op.Sennal = "LN+";
                 op.NroOP = "7000011342";
                 op.NroOrden = "1111111";
-                op.IdOPMMASS = 5301;
+                op.IdOPMMASS = 5321;
                 op.MarcaDescripcion = "CALZADOS OMBU";
                 op.ResponsableOrden = "Silvia Malloggi";
-                op.Comentarios = "prueba cambio hr prog 2";
+                op.Comentarios = "prueba precio 2";
                 op.FechaVencimiento = "2021-12-31";
                 op.CompetitivoDescripcion = "IND. TEXTIL ; MODA ; CALZADO ; RELOJERIA";
                 op.TotalGralMenciones = 4;
@@ -345,13 +345,13 @@ namespace FormCargaOP
 
                 ren1.NroDeRenglon = 1;
                 ren1.ProgramaDescripcion = "+DATA";
-                ren1.HoraDesdeCompraBloqHorario = "13:00:00";
-                ren1.HoraHastaCompraBloqHorario = "14:30:00";
+                ren1.HoraDesdeCompraBloqHorario = "15:00:00";
+                ren1.HoraHastaCompraBloqHorario = "16:30:00";
                 ren1.Duracion = 15;
                 ren1.CodigoMaterial = "14429";
                 ren1.TemaMaterialusar = "A_14429_CALZADOS OMBU_COBALTO_15";
                 ren1.TipoPublicidad = "Tanda";
-                ren1.PrecioSegundo = 200.0000;
+                ren1.PrecioSegundo = 1026000.0000;
 
                 ren2.NroDeRenglon = 2;
                 ren2.ProgramaDescripcion = "+DATA";
@@ -361,7 +361,7 @@ namespace FormCargaOP
                 ren2.CodigoMaterial = "14429";
                 ren2.TemaMaterialusar = "A_14429_CALZADOS OMBU_COBALTO_15";
                 ren2.TipoPublicidad = "Tanda";
-                ren2.PrecioSegundo = 200.0000;
+                ren2.PrecioSegundo = 1026000.0000;
 
                 WSLaNacion.mencion men1 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men2 = new WSLaNacion.mencion();
@@ -455,7 +455,7 @@ namespace FormCargaOP
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
                 op.Renglones.Add(ren1);
-                op.Renglones.Add(ren2);
+                //op.Renglones.Add(ren2);
 
                 var respuesta = client.addOrden(op);
 
