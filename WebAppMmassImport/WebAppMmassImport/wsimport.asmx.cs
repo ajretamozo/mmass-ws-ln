@@ -183,7 +183,8 @@ namespace WebAppMmassImport
                     error = true;
                 }
 
-                if (elem.PrecioSegundo < 0 || elem.PrecioSegundo >= 1000000)
+                //if (elem.PrecioSegundo < 0 || elem.PrecioSegundo >= 1000000)
+                if (elem.PrecioSegundo < 0)
                 {
                     contErr4++;
                     if (contErr4 < 2)
@@ -349,13 +350,21 @@ namespace WebAppMmassImport
             {
                 resp.Descripcion += " - La Duración enviada en los Renglones " + rengErr3 + " debe ser mayor a 0";
             }
+            //if (contErr4 == 1)
+            //{
+            //    resp.Descripcion += " - El Precio enviado en el Renglón " + rengErr4 + " debe ser mayor o igual a 0 y menor a 1 Millón";
+            //}
+            //else if (contErr4 > 1)
+            //{
+            //    resp.Descripcion += " - El Precio enviado en los Renglones " + rengErr4 + " debe ser mayor o igual a 0 y menor a 1 Millón";
+            //}
             if (contErr4 == 1)
             {
-                resp.Descripcion += " - El Precio enviado en el Renglón " + rengErr4 + " debe ser mayor o igual a 0 y menor a 1 Millón";
+                resp.Descripcion += " - El Precio enviado en el Renglón " + rengErr4 + " debe ser mayor o igual a 0";
             }
             else if (contErr4 > 1)
             {
-                resp.Descripcion += " - El Precio enviado en los Renglones " + rengErr4 + " debe ser mayor o igual a 0 y menor a 1 Millón";
+                resp.Descripcion += " - El Precio enviado en los Renglones " + rengErr4 + " debe ser mayor o igual a 0";
             }
             if (contErr5 == 1)
             {
