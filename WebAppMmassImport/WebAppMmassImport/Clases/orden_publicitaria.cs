@@ -250,7 +250,7 @@ namespace WebAppMmassImport.Clases
                 }
                 else if (Estado == 5)
                 {
-                    parametros.Add(new SqlParameter() { ParameterName = "@parairradiar", SqlDbType = SqlDbType.Int, Value = 1 });
+                    parametros.Add(new SqlParameter() { ParameterName = "@parairradiar", SqlDbType = SqlDbType.Int, Value = 0 });
                     parametros.Add(new SqlParameter() { ParameterName = "@es_anulada", SqlDbType = SqlDbType.Int, Value = 0 });
                     parametros.Add(new SqlParameter() { ParameterName = "@fecha_anulada", SqlDbType = SqlDbType.DateTime, Value = DBNull.Value });
                 }
@@ -891,7 +891,7 @@ namespace WebAppMmassImport.Clases
                          "es_canje, es_solorutina, es_agregado, duracion_real, seg_art, seg_pagos, es_facturada, anio_fact, mes_fact, esta_pagada, importe, descuento, importe_neto, prating, " +
                          "id_programa, id_emisiones_pgma) " +
                          "values (@fecharutina, @id_op, @anio, @mes, @nro_orden, @id_detalle, @desc_tema, @id_tema, @duracion, @id_contacto, @id_medio, @horadesde, @horahasta, @tipo_orden_mencion, " +
-                         "@orden, @msrepl_tran_version, @es_pnt, 0, 1, @id_producto, @id_categoria, @tipo_suger, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, @seg_pagos, 0, 0, 0, 0, @importe, 0, @importe_neto, 0, " +
+                         "@orden, @msrepl_tran_version, @es_pnt, @es_levantada, 1, @id_producto, @id_categoria, @tipo_suger, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, @seg_pagos, 0, 0, 0, 0, @importe, 0, @importe_neto, 0, " +
                          "@id_programa, @id_emisiones_pgma)";
 
             Guid msrepl_tran_version = new Guid();
@@ -988,7 +988,15 @@ namespace WebAppMmassImport.Clases
             {
                 parametrosM.Add(new SqlParameter() { ParameterName = "@id_medio", SqlDbType = SqlDbType.Int, Value = DB.DInt(idMed) });
             }
-           
+            if (Estado == 3)
+            {
+                parametrosM.Add(new SqlParameter() { ParameterName = "@es_levantada", SqlDbType = SqlDbType.Int, Value = 0 });
+            }
+            else
+            {
+                parametrosM.Add(new SqlParameter() { ParameterName = "@es_levantada", SqlDbType = SqlDbType.Int, Value = 2 });
+            }
+
             try
             {
                 DB.Execute(sql, parametrosM);

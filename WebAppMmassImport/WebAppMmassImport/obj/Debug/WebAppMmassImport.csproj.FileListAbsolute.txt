@@ -359,7 +359,6 @@ C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\WebAppMmassIm
 C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\WebAppMmassImport\bin\es\System.Web.WebPages.resources.dll
 C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\WebAppMmassImport\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\WebAppMmassImport\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\WebAppMmassImport\obj\Debug\WebAppMmassImport.csprojAssemblyReference.cache
 C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\WebAppMmassImport\obj\Debug\WebAppMmassImport.csproj.CopyComplete
 C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\WebAppMmassImport\obj\Debug\WebAppMmassImport.dll
 C:\Users\devagustin\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\WebAppMmassImport\obj\Debug\WebAppMmassImport.pdb
