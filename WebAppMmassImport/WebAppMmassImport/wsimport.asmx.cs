@@ -376,11 +376,11 @@ namespace WebAppMmassImport
             }
             if (contErr6 == 1)
             {
-                resp.Descripcion += " - El Programa enviado en el Renglón " + rengErr6 + " no existe";
+                resp.Descripcion += " - El Programa enviado en el Renglón " + rengErr6 + " no existe o hay más de uno";
             }
             else if (contErr6 > 1)
             {
-                resp.Descripcion += " - El Programa enviado en los Renglones " + rengErr6 + " no existe";
+                resp.Descripcion += " - El Programa enviado en los Renglones " + rengErr6 + " no existe o hay más de uno";
             }
             //if (contErr7 == 1)
             //{

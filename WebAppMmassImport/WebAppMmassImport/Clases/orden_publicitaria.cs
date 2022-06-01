@@ -758,7 +758,7 @@ namespace WebAppMmassImport.Clases
 
         public int comprobarPrograma(string desc)
         {
-            string sqlCommand = "select id_programa from programas where desc_programa like '" + desc + "'";
+            string sqlCommand = "select id_programa from programas where desc_programa like '" + desc + "' and es_borrado = 0";
             int resultado = 0;
             DataTable t = DB.Select(sqlCommand);
 
