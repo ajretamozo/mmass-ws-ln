@@ -16,6 +16,18 @@ namespace WebAppMmassImport.Clases
         public int Id { get; set; }
     }
 
+    public class respuestaMenciones
+    {
+        public string IdAvisoNotables { get; set; }
+        public string ProgramaDescripcion { get; set; }
+        public string HoraDesdeCompraBloqHorario { get; set; }
+        public string HoraHastaCompraBloqHorario { get; set; }
+        public string CodigoMaterial { get; set; }
+        public string DiaDEEmision { get; set; }
+        public int CantPautada { get; set; }
+        public int SegPautado { get; set; }
+    }
+
     public class montos
     {
         public double monto { get; set; }
@@ -28,6 +40,7 @@ namespace WebAppMmassImport.Clases
         public string Ubicacion { get; set; }
         public int UbicacionManualOrden { get; set; }
         public int TotalMenciones { get; set; }
+        public string IdAvisoNotables { get; set; }
     }
     public class renglon
     {
@@ -289,10 +302,6 @@ namespace WebAppMmassImport.Clases
                     DB.Execute(sql, parametroso);
 
                     // Grabo los Renglones...
-                    //foreach (renglon elem in Renglones)
-                    //{
-                    //    DB.Execute("delete from menciones where id_detalle = " + elem.NroDeRenglon.ToString() + "and id_op = " + IdOPMMASS.ToString());
-                    //}
                     DB.Execute("delete from menciones where fecharutina > GETDATE() and id_op = " + IdOPMMASS.ToString());
                     // Limpio Renglones que no tengan Menciones...
                     String sqlDet = "select id_detalle from orden_pub_as where id_op = " + IdOPMMASS.ToString();
@@ -889,10 +898,10 @@ namespace WebAppMmassImport.Clases
             string sql = "insert into menciones(fecharutina, id_op, anio, mes, nro_orden, id_detalle, desc_tema, id_tema, duracion, id_contacto, id_medio, horadesde, horahasta, tipo_orden_mencion, " +
                          "orden, msrepl_tran_version, es_pnt, es_levantada, id_representacion, id_producto, id_categoria, tipo_suger, id_duracion, es_tandaimpar, puede_mover, es_pauta, es_aleatorio, " +
                          "es_canje, es_solorutina, es_agregado, duracion_real, seg_art, seg_pagos, es_facturada, anio_fact, mes_fact, esta_pagada, importe, descuento, importe_neto, prating, " +
-                         "id_programa, id_emisiones_pgma) " +
+                         "id_programa, id_emisiones_pgma, id_externo) " +
                          "values (@fecharutina, @id_op, @anio, @mes, @nro_orden, @id_detalle, @desc_tema, @id_tema, @duracion, @id_contacto, @id_medio, @horadesde, @horahasta, @tipo_orden_mencion, " +
                          "@orden, @msrepl_tran_version, @es_pnt, @es_levantada, 1, @id_producto, @id_categoria, @tipo_suger, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, @seg_pagos, 0, 0, 0, 0, @importe, 0, @importe_neto, 0, " +
-                         "@id_programa, @id_emisiones_pgma)";
+                         "@id_programa, @id_emisiones_pgma, @id_externo)";
 
             Guid msrepl_tran_version = new Guid();
             DateTime diaDEmision = DateTime.Parse(men.DiaDEEmision);
@@ -954,6 +963,8 @@ namespace WebAppMmassImport.Clases
                             { ParameterName="@importe",SqlDbType = SqlDbType.Decimal, Value = dur * precioSeg },
                             new SqlParameter()
                             { ParameterName="@importe_neto",SqlDbType = SqlDbType.Decimal, Value = dur * precioSeg },
+                            new SqlParameter()
+                            { ParameterName="@id_externo",SqlDbType = SqlDbType.NVarChar, Value = men.IdAvisoNotables }
                         };
 
             if (idProg != 0 && idEmi != 0)
@@ -1231,17 +1242,48 @@ namespace WebAppMmassImport.Clases
                 {
                     DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString() + " and id_detalle =" + idDet.ToString());
                 }
+            }     
+        }
+
+        public static List<respuestaMenciones> consultarMenciones(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            string sqlCommand = @"select m.id_externo, p.desc_programa, m.horadesde, m.horahasta, dta.etiqueta, m.fecharutina,
+                                  count(*) as CantPautada, sum(m.duracion) as SegPautado,
+                                  sum(case when isnull(m.duracion_real, 0) > 0 then 1 else 0 end) as CantEmitida,
+                                  sum(isnull(m.duracion_real, 0)) as SegEmitido
+                                  from menciones m
+                                  left join programas p on p.id_programa = m.id_programa
+                                  left join temas t on t.id_tema = m.id_tema
+                                  left join dur_tema_as dta on dta.id_tema = t.id_tema
+                                  where m.fecharutina between '" + fechaDesde.ToString() + "' and '" + fechaHasta.ToString() + "' group by m.id_externo, p.desc_programa, m.horadesde, m.horahasta, dta.etiqueta, m.fecharutina order by m.fecharutina desc";
+            
+            List<respuestaMenciones> respuestasMenciones = new List<respuestaMenciones>();
+            respuestaMenciones respMenciones;
+
+            try
+            {
+                DataTable t = DB.Select(sqlCommand);
+                foreach (DataRow item in t.Rows)
+                {
+                    respMenciones = new respuestaMenciones
+                    {
+                        IdAvisoNotables = item["id_externo"].ToString(),
+                        ProgramaDescripcion = item["desc_programa"].ToString(),
+                        HoraDesdeCompraBloqHorario = item["horadesde"].ToString(),
+                        HoraHastaCompraBloqHorario = item["horahasta"].ToString(),
+                        CodigoMaterial = item["etiqueta"].ToString(),
+                        DiaDEEmision = item["fecharutina"].ToString(),
+                        CantPautada = int.Parse(item["CantPautada"].ToString()),
+                        SegPautado = int.Parse(item["SegPautado"].ToString())
+                    };
+                    respuestasMenciones.Add(respMenciones);
+                }
             }
-
-            //foreach (DataRow item in tz.Rows)
-            //{
-            //    int cantMen = DB.DInt(item["cantMen"].ToString());
-
-            //    if (cantMen == 0)
-            //    {
-            //        DB.Execute("delete from orden_pub_as where id_op = " + IdOPMMASS.ToString() + " and ops.id_detalle =" + idDet.ToString());
-            //    }
-            //}
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return respuestasMenciones;
         }
 
     }
