@@ -16,7 +16,7 @@ namespace WebAppMmassImport.Clases
         public int Id { get; set; }
     }
 
-    public class respuestaMenciones
+    public class respuestaMencion
     {
         public string IdAvisoNotables { get; set; }
         public string ProgramaDescripcion { get; set; }
@@ -26,6 +26,14 @@ namespace WebAppMmassImport.Clases
         public string DiaDEEmision { get; set; }
         public int CantPautada { get; set; }
         public int SegPautado { get; set; }
+    }
+
+    public class respuestaMenciones
+    {
+        public string Estado { get; set; }
+        public string Descripcion { get; set; }
+
+        public List<respuestaMencion> resMenciones;
     }
 
     public class montos
@@ -1245,45 +1253,67 @@ namespace WebAppMmassImport.Clases
             }     
         }
 
-        public static List<respuestaMenciones> consultarMenciones(DateTime fechaDesde, DateTime fechaHasta)
+        public static respuestaMenciones consulMenciones(string fechaDesde, string fechaHasta)
         {
-            string sqlCommand = @"select m.id_externo, p.desc_programa, m.horadesde, m.horahasta, dta.etiqueta, m.fecharutina,
-                                  count(*) as CantPautada, sum(m.duracion) as SegPautado,
-                                  sum(case when isnull(m.duracion_real, 0) > 0 then 1 else 0 end) as CantEmitida,
-                                  sum(isnull(m.duracion_real, 0)) as SegEmitido
-                                  from menciones m
-                                  left join programas p on p.id_programa = m.id_programa
-                                  left join temas t on t.id_tema = m.id_tema
-                                  left join dur_tema_as dta on dta.id_tema = t.id_tema
-                                  where m.fecharutina between '" + fechaDesde.ToString() + "' and '" + fechaHasta.ToString() + "' group by m.id_externo, p.desc_programa, m.horadesde, m.horahasta, dta.etiqueta, m.fecharutina order by m.fecharutina desc";
-            
-            List<respuestaMenciones> respuestasMenciones = new List<respuestaMenciones>();
-            respuestaMenciones respMenciones;
+            string sqlCommand = @"SELECT m.id_externo, p.desc_programa,
+                            CASE
+                            WHEN m.id_programa IS NULL THEN m.horadesde
+                            WHEN m.id_programa IS NOT NULL THEN (SELECT hs_desde from emisiones_pgma WHERE id_programa=m.id_programa AND id_emisiones_pgma=m.id_emisiones_pgma)
+                            END
+                            AS HoraDesde,
+                            CASE
+                            WHEN m.id_programa IS NULL THEN m.horahasta
+                            WHEN m.id_programa IS NOT NULL THEN (SELECT hs_hasta FROM emisiones_pgma WHERE id_programa=m.id_programa AND id_emisiones_pgma=m.id_emisiones_pgma)
+                            END
+                            AS HoraHasta, 
+                            dta.etiqueta, m.fecharutina, COUNT(*) AS CantPautada, SUM(m.duracion) AS SegPautado,
+                            SUM(CASE WHEN ISNULL(m.duracion_real, 0) > 0 THEN 1 ELSE 0 END) AS CantEmitida,
+                            SUM(ISNULL(m.duracion_real, 0)) AS SegEmitido
+                            FROM menciones m
+                            LEFT JOIN programas p ON p.id_programa = m.id_programa
+                            LEFT JOIN temas t ON t.id_tema = m.id_tema
+                            LEFT JOIN dur_tema_as dta ON dta.id_tema = t.id_tema
+                            WHERE m.fecharutina BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "' GROUP BY m.id_externo, p.desc_programa, m.horadesde, m.horahasta, dta.etiqueta, m.fecharutina, m.id_programa, m.id_emisiones_pgma ORDER BY m.fecharutina DESC";
+
+            respuestaMenciones respMenciones = new respuestaMenciones();             
+            respuestaMencion respMencion;
 
             try
             {
                 DataTable t = DB.Select(sqlCommand);
-                foreach (DataRow item in t.Rows)
+                if(t.Rows.Count > 0)
                 {
-                    respMenciones = new respuestaMenciones
+                    foreach (DataRow item in t.Rows)
                     {
-                        IdAvisoNotables = item["id_externo"].ToString(),
-                        ProgramaDescripcion = item["desc_programa"].ToString(),
-                        HoraDesdeCompraBloqHorario = item["horadesde"].ToString(),
-                        HoraHastaCompraBloqHorario = item["horahasta"].ToString(),
-                        CodigoMaterial = item["etiqueta"].ToString(),
-                        DiaDEEmision = item["fecharutina"].ToString(),
-                        CantPautada = int.Parse(item["CantPautada"].ToString()),
-                        SegPautado = int.Parse(item["SegPautado"].ToString())
-                    };
-                    respuestasMenciones.Add(respMenciones);
+                        respMencion = new respuestaMencion
+                        {
+                            IdAvisoNotables = item["id_externo"].ToString(),
+                            ProgramaDescripcion = item["desc_programa"].ToString(),
+                            HoraDesdeCompraBloqHorario = item["horadesde"].ToString(),
+                            HoraHastaCompraBloqHorario = item["horahasta"].ToString(),
+                            CodigoMaterial = item["etiqueta"].ToString(),
+                            DiaDEEmision = item["fecharutina"].ToString(),
+                            CantPautada = int.Parse(item["CantPautada"].ToString()),
+                            SegPautado = int.Parse(item["SegPautado"].ToString())
+                        };
+                        respMenciones.resMenciones.Add(respMencion);
+                        respMenciones.Estado = "OK";
+                        respMenciones.Descripcion = "Se encontraron " + t.Rows.Count.ToString() + " Menciones";
+                    }
                 }
+                else
+                {
+                    respMenciones.Estado = "OK";
+                    respMenciones.Descripcion = "No se encontraron Menciones para ese rango de fechas";
+                }               
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                respMenciones.Estado = "ERROR";
+                respMenciones.Descripcion = "Ocurrió un error al consultar las Menciones";
             }
-            return respuestasMenciones;
+            return respMenciones;
         }
 
     }

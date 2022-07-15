@@ -425,5 +425,33 @@ namespace WebAppMmassImport
                 return resp;
             }
         }
+
+        public respuestaMenciones consultarMenciones(string fechaDesde, string fechaHasta)
+        {
+            respuestaMenciones respuesta = new respuestaMenciones();
+
+            if (fechaDesde == "" || fechaHasta == "")
+            {
+                respuesta.Estado = "VALIDACION";
+                respuesta.Descripcion = "Debe ingresar valores para 'fechaDesde' y 'fechaHasta'";
+                return respuesta;
+            }
+            else
+            {
+                DateTime fechaD = Convert.ToDateTime(fechaDesde);
+                DateTime fechaH = Convert.ToDateTime(fechaHasta);
+                if (fechaD > fechaH)
+                {
+                    respuesta.Estado = "VALIDACION";
+                    respuesta.Descripcion = "La 'fechaHasta' debe ser posterior a la 'fechaDesde'";
+                    return respuesta;
+                }
+                else
+                {
+                   return respuesta = orden_publicitaria.consulMenciones(fechaDesde, fechaHasta);
+                }
+            }
+        }
+
     }
 }
