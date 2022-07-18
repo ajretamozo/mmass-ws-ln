@@ -26,6 +26,8 @@ namespace WebAppMmassImport.Clases
         public string DiaDEEmision { get; set; }
         public int CantPautada { get; set; }
         public int SegPautado { get; set; }
+        public int CantEmitida { get; set; }
+        public int SegEmitido { get; set; }
     }
 
     public class respuestaMenciones
@@ -1275,14 +1277,15 @@ namespace WebAppMmassImport.Clases
                             LEFT JOIN dur_tema_as dta ON dta.id_tema = t.id_tema
                             WHERE m.fecharutina BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "' GROUP BY m.id_externo, p.desc_programa, m.horadesde, m.horahasta, dta.etiqueta, m.fecharutina, m.id_programa, m.id_emisiones_pgma ORDER BY m.fecharutina DESC";
 
-            respuestaMenciones respMenciones = new respuestaMenciones();             
-            respuestaMencion respMencion;
+            respuestaMenciones respMenciones = new respuestaMenciones();   
 
             try
             {
                 DataTable t = DB.Select(sqlCommand);
                 if(t.Rows.Count > 0)
                 {
+                    respuestaMencion respMencion;
+                    respMenciones.resMenciones = new List<respuestaMencion>();
                     foreach (DataRow item in t.Rows)
                     {
                         respMencion = new respuestaMencion
@@ -1294,7 +1297,9 @@ namespace WebAppMmassImport.Clases
                             CodigoMaterial = item["etiqueta"].ToString(),
                             DiaDEEmision = item["fecharutina"].ToString(),
                             CantPautada = int.Parse(item["CantPautada"].ToString()),
-                            SegPautado = int.Parse(item["SegPautado"].ToString())
+                            SegPautado = int.Parse(item["SegPautado"].ToString()),
+                            CantEmitida = int.Parse(item["CantEmitida"].ToString()),
+                            SegEmitido = int.Parse(item["SegEmitido"].ToString())
                         };
                         respMenciones.resMenciones.Add(respMencion);
                         respMenciones.Estado = "OK";

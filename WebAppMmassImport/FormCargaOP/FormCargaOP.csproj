@@ -79,10 +79,16 @@
     <None Include="Connected Services\WSLaNacion\FormCargaOP.WSLaNacion.addOrdenResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\WSLaNacion\FormCargaOP.WSLaNacion.consultarMencionesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\WSLaNacion\FormCargaOP.WSLaNacion.HelloWorldResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\WSLaNacion\FormCargaOP.WSLaNacion.respuesta.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WSLaNacion\FormCargaOP.WSLaNacion.respuestaMenciones.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\WSLaNacion\wsimport.wsdl" />

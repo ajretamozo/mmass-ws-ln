@@ -1161,6 +1161,9 @@ namespace FormCargaOP.WSLaNacion {
         
         private int TotalMencionesField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdAvisoNotablesField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -1219,6 +1222,19 @@ namespace FormCargaOP.WSLaNacion {
                 if ((this.TotalMencionesField.Equals(value) != true)) {
                     this.TotalMencionesField = value;
                     this.RaisePropertyChanged("TotalMenciones");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public string IdAvisoNotables {
+            get {
+                return this.IdAvisoNotablesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdAvisoNotablesField, value) != true)) {
+                    this.IdAvisoNotablesField = value;
+                    this.RaisePropertyChanged("IdAvisoNotables");
                 }
             }
         }
@@ -1309,6 +1325,245 @@ namespace FormCargaOP.WSLaNacion {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="respuestaMenciones", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class respuestaMenciones : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FormCargaOP.WSLaNacion.ArrayOfRespuestaMencion resMencionesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EstadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescripcionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public FormCargaOP.WSLaNacion.ArrayOfRespuestaMencion resMenciones {
+            get {
+                return this.resMencionesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.resMencionesField, value) != true)) {
+                    this.resMencionesField = value;
+                    this.RaisePropertyChanged("resMenciones");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string Estado {
+            get {
+                return this.EstadoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EstadoField, value) != true)) {
+                    this.EstadoField = value;
+                    this.RaisePropertyChanged("Estado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string Descripcion {
+            get {
+                return this.DescripcionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescripcionField, value) != true)) {
+                    this.DescripcionField = value;
+                    this.RaisePropertyChanged("Descripcion");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfRespuestaMencion", Namespace="http://tempuri.org/", ItemName="respuestaMencion")]
+    [System.SerializableAttribute()]
+    public class ArrayOfRespuestaMencion : System.Collections.Generic.List<FormCargaOP.WSLaNacion.respuestaMencion> {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="respuestaMencion", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class respuestaMencion : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdAvisoNotablesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProgramaDescripcionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HoraDesdeCompraBloqHorarioField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HoraHastaCompraBloqHorarioField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CodigoMaterialField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DiaDEEmisionField;
+        
+        private int CantPautadaField;
+        
+        private int SegPautadoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string IdAvisoNotables {
+            get {
+                return this.IdAvisoNotablesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdAvisoNotablesField, value) != true)) {
+                    this.IdAvisoNotablesField = value;
+                    this.RaisePropertyChanged("IdAvisoNotables");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string ProgramaDescripcion {
+            get {
+                return this.ProgramaDescripcionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProgramaDescripcionField, value) != true)) {
+                    this.ProgramaDescripcionField = value;
+                    this.RaisePropertyChanged("ProgramaDescripcion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string HoraDesdeCompraBloqHorario {
+            get {
+                return this.HoraDesdeCompraBloqHorarioField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HoraDesdeCompraBloqHorarioField, value) != true)) {
+                    this.HoraDesdeCompraBloqHorarioField = value;
+                    this.RaisePropertyChanged("HoraDesdeCompraBloqHorario");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string HoraHastaCompraBloqHorario {
+            get {
+                return this.HoraHastaCompraBloqHorarioField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HoraHastaCompraBloqHorarioField, value) != true)) {
+                    this.HoraHastaCompraBloqHorarioField = value;
+                    this.RaisePropertyChanged("HoraHastaCompraBloqHorario");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public string CodigoMaterial {
+            get {
+                return this.CodigoMaterialField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CodigoMaterialField, value) != true)) {
+                    this.CodigoMaterialField = value;
+                    this.RaisePropertyChanged("CodigoMaterial");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
+        public string DiaDEEmision {
+            get {
+                return this.DiaDEEmisionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DiaDEEmisionField, value) != true)) {
+                    this.DiaDEEmisionField = value;
+                    this.RaisePropertyChanged("DiaDEEmision");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
+        public int CantPautada {
+            get {
+                return this.CantPautadaField;
+            }
+            set {
+                if ((this.CantPautadaField.Equals(value) != true)) {
+                    this.CantPautadaField = value;
+                    this.RaisePropertyChanged("CantPautada");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=7)]
+        public int SegPautado {
+            get {
+                return this.SegPautadoField;
+            }
+            set {
+                if ((this.SegPautadoField.Equals(value) != true)) {
+                    this.SegPautadoField = value;
+                    this.RaisePropertyChanged("SegPautado");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WSLaNacion.wsimportSoap")]
     public interface wsimportSoap {
@@ -1333,6 +1588,13 @@ namespace FormCargaOP.WSLaNacion {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/addOrden", ReplyAction="*")]
         System.Threading.Tasks.Task<FormCargaOP.WSLaNacion.addOrdenResponse> addOrdenAsync(FormCargaOP.WSLaNacion.addOrdenRequest request);
+        
+        // CODEGEN: Se está generando un contrato de mensaje, ya que el nombre de elemento fechaDesde del espacio de nombres http://tempuri.org/ no está marcado para aceptar valores nil.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/consultarMenciones", ReplyAction="*")]
+        FormCargaOP.WSLaNacion.consultarMencionesResponse consultarMenciones(FormCargaOP.WSLaNacion.consultarMencionesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/consultarMenciones", ReplyAction="*")]
+        System.Threading.Tasks.Task<FormCargaOP.WSLaNacion.consultarMencionesResponse> consultarMencionesAsync(FormCargaOP.WSLaNacion.consultarMencionesRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1532,6 +1794,78 @@ namespace FormCargaOP.WSLaNacion {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class consultarMencionesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="consultarMenciones", Namespace="http://tempuri.org/", Order=0)]
+        public FormCargaOP.WSLaNacion.consultarMencionesRequestBody Body;
+        
+        public consultarMencionesRequest() {
+        }
+        
+        public consultarMencionesRequest(FormCargaOP.WSLaNacion.consultarMencionesRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class consultarMencionesRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string fechaDesde;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string fechaHasta;
+        
+        public consultarMencionesRequestBody() {
+        }
+        
+        public consultarMencionesRequestBody(string fechaDesde, string fechaHasta) {
+            this.fechaDesde = fechaDesde;
+            this.fechaHasta = fechaHasta;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class consultarMencionesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="consultarMencionesResponse", Namespace="http://tempuri.org/", Order=0)]
+        public FormCargaOP.WSLaNacion.consultarMencionesResponseBody Body;
+        
+        public consultarMencionesResponse() {
+        }
+        
+        public consultarMencionesResponse(FormCargaOP.WSLaNacion.consultarMencionesResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class consultarMencionesResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public FormCargaOP.WSLaNacion.respuestaMenciones consultarMencionesResult;
+        
+        public consultarMencionesResponseBody() {
+        }
+        
+        public consultarMencionesResponseBody(FormCargaOP.WSLaNacion.respuestaMenciones consultarMencionesResult) {
+            this.consultarMencionesResult = consultarMencionesResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface wsimportSoapChannel : FormCargaOP.WSLaNacion.wsimportSoap, System.ServiceModel.IClientChannel {
     }
@@ -1630,6 +1964,33 @@ namespace FormCargaOP.WSLaNacion {
             inValue.Body = new FormCargaOP.WSLaNacion.addOrdenRequestBody();
             inValue.Body.registro = registro;
             return ((FormCargaOP.WSLaNacion.wsimportSoap)(this)).addOrdenAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        FormCargaOP.WSLaNacion.consultarMencionesResponse FormCargaOP.WSLaNacion.wsimportSoap.consultarMenciones(FormCargaOP.WSLaNacion.consultarMencionesRequest request) {
+            return base.Channel.consultarMenciones(request);
+        }
+        
+        public FormCargaOP.WSLaNacion.respuestaMenciones consultarMenciones(string fechaDesde, string fechaHasta) {
+            FormCargaOP.WSLaNacion.consultarMencionesRequest inValue = new FormCargaOP.WSLaNacion.consultarMencionesRequest();
+            inValue.Body = new FormCargaOP.WSLaNacion.consultarMencionesRequestBody();
+            inValue.Body.fechaDesde = fechaDesde;
+            inValue.Body.fechaHasta = fechaHasta;
+            FormCargaOP.WSLaNacion.consultarMencionesResponse retVal = ((FormCargaOP.WSLaNacion.wsimportSoap)(this)).consultarMenciones(inValue);
+            return retVal.Body.consultarMencionesResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<FormCargaOP.WSLaNacion.consultarMencionesResponse> FormCargaOP.WSLaNacion.wsimportSoap.consultarMencionesAsync(FormCargaOP.WSLaNacion.consultarMencionesRequest request) {
+            return base.Channel.consultarMencionesAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<FormCargaOP.WSLaNacion.consultarMencionesResponse> consultarMencionesAsync(string fechaDesde, string fechaHasta) {
+            FormCargaOP.WSLaNacion.consultarMencionesRequest inValue = new FormCargaOP.WSLaNacion.consultarMencionesRequest();
+            inValue.Body = new FormCargaOP.WSLaNacion.consultarMencionesRequestBody();
+            inValue.Body.fechaDesde = fechaDesde;
+            inValue.Body.fechaHasta = fechaHasta;
+            return ((FormCargaOP.WSLaNacion.wsimportSoap)(this)).consultarMencionesAsync(inValue);
         }
     }
 }

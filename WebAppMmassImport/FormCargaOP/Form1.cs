@@ -469,5 +469,23 @@ namespace FormCargaOP
                 textBox46.Text = respuesta.Id.ToString();
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (WSLaNacion.wsimportSoapClient client = new WSLaNacion.wsimportSoapClient())
+            {
+                client.Endpoint.Binding.SendTimeout = new TimeSpan(0, 10, 00);
+
+                WSLaNacion.orden_publicitaria op = new WSLaNacion.orden_publicitaria();
+
+                string fechaDesde = "2022-05-17";
+                string fechaHasta = "2022-05-30";
+
+                var respuesta = client.consultarMenciones(fechaDesde, fechaHasta);
+
+                textBox50.Text = respuesta.Estado;
+                textBox49.Text = respuesta.Descripcion;
+            }
+        }
     }
 }

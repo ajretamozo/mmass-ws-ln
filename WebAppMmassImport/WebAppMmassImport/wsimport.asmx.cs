@@ -426,6 +426,7 @@ namespace WebAppMmassImport
             }
         }
 
+        [WebMethod]
         public respuestaMenciones consultarMenciones(string fechaDesde, string fechaHasta)
         {
             respuestaMenciones respuesta = new respuestaMenciones();
