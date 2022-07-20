@@ -1288,14 +1288,17 @@ namespace WebAppMmassImport.Clases
                     respMenciones.resMenciones = new List<respuestaMencion>();
                     foreach (DataRow item in t.Rows)
                     {
+                        string fechaFormat = formatFecha(item["fecharutina"].ToString());
+                        string horaDFormat = formatHora(item["horadesde"].ToString());
+                        string horaHFormat = formatHora(item["horahasta"].ToString());
                         respMencion = new respuestaMencion
                         {
                             IdAvisoNotables = item["id_externo"].ToString(),
                             ProgramaDescripcion = item["desc_programa"].ToString(),
-                            HoraDesdeCompraBloqHorario = item["horadesde"].ToString(),
-                            HoraHastaCompraBloqHorario = item["horahasta"].ToString(),
+                            HoraDesdeCompraBloqHorario = horaDFormat,
+                            HoraHastaCompraBloqHorario = horaHFormat,
                             CodigoMaterial = item["etiqueta"].ToString(),
-                            DiaDEEmision = item["fecharutina"].ToString(),
+                            DiaDEEmision = fechaFormat,
                             CantPautada = int.Parse(item["CantPautada"].ToString()),
                             SegPautado = int.Parse(item["SegPautado"].ToString()),
                             CantEmitida = int.Parse(item["CantEmitida"].ToString()),
@@ -1319,6 +1322,22 @@ namespace WebAppMmassImport.Clases
                 respMenciones.Descripcion = "Ocurrió un error al consultar las Menciones";
             }
             return respMenciones;
+        }
+
+        public static string formatFecha(string fecha)
+        {
+            string fechaFormat = "";
+            string[] arrFecha = fecha.Split(' ');
+            fechaFormat = arrFecha[0];
+            return fechaFormat;
+        }
+
+        public static string formatHora(string hora)
+        {
+            string horaFormat = "";
+            string[] arrHora = hora.Split(' ');
+            horaFormat = arrHora[1];
+            return horaFormat;
         }
 
     }

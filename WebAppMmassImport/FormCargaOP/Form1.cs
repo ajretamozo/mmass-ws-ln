@@ -478,8 +478,8 @@ namespace FormCargaOP
 
                 WSLaNacion.orden_publicitaria op = new WSLaNacion.orden_publicitaria();
 
-                string fechaDesde = "2022-05-17";
-                string fechaHasta = "2022-05-30";
+                string fechaDesde = "2022-03-14";
+                string fechaHasta = "2022-03-14";
 
                 var respuesta = client.consultarMenciones(fechaDesde, fechaHasta);
 
