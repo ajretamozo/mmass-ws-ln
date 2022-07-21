@@ -1305,9 +1305,9 @@ namespace WebAppMmassImport.Clases
                             SegEmitido = int.Parse(item["SegEmitido"].ToString())
                         };
                         respMenciones.resMenciones.Add(respMencion);
-                        respMenciones.Estado = "OK";
-                        respMenciones.Descripcion = "Se encontraron " + t.Rows.Count.ToString() + " Menciones";
                     }
+                    respMenciones.Estado = "OK";
+                    respMenciones.Descripcion = "Se encontraron " + t.Rows.Count.ToString() + " Menciones";
                 }
                 else
                 {
@@ -1327,17 +1327,31 @@ namespace WebAppMmassImport.Clases
         public static string formatFecha(string fecha)
         {
             string fechaFormat = "";
-            string[] arrFecha = fecha.Split(' ');
-            fechaFormat = arrFecha[0];
-            return fechaFormat;
+            if (fecha == "")
+            {
+                return fechaFormat;
+            }
+            else
+            {
+                string[] arrFecha = fecha.Split(' ');
+                fechaFormat = arrFecha[0];
+                return fechaFormat;
+            }
         }
 
         public static string formatHora(string hora)
         {
             string horaFormat = "";
-            string[] arrHora = hora.Split(' ');
-            horaFormat = arrHora[1];
-            return horaFormat;
+            if (hora == "")
+            {
+                return horaFormat;
+            }
+            else
+            {
+                string[] arrHora = hora.Split(' ');
+                horaFormat = arrHora[1];
+                return horaFormat;
+            }
         }
 
     }
