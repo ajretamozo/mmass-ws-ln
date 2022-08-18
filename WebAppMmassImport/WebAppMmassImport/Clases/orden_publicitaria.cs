@@ -1257,7 +1257,7 @@ namespace WebAppMmassImport.Clases
 
         public static respuestaMenciones consulMenciones(string fechaDesde, string fechaHasta)
         {
-            string sqlCommand = @"SELECT m.id_externo, p.desc_programa,
+            string sqlCommand = @"SELECT m.id_externo, p.desc_programaX,
                             CASE
                             WHEN m.id_programa IS NULL THEN m.horadesde
                             WHEN m.id_programa IS NOT NULL THEN (SELECT hs_desde from emisiones_pgma WHERE id_programa=m.id_programa AND id_emisiones_pgma=m.id_emisiones_pgma)
@@ -1319,7 +1319,7 @@ namespace WebAppMmassImport.Clases
             {
                 Console.WriteLine(ex.Message);
                 respMenciones.Estado = "ERROR";
-                respMenciones.Descripcion = "Ocurrió un error al consultar las Menciones";
+                respMenciones.Descripcion = "Ocurrió un error al consultar las Menciones: \"" + ex.Message + "\"";
             }
             return respMenciones;
         }
