@@ -121,6 +121,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="Comentarios" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="TotalGralMenciones" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="FechaVencimiento" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XMLCompleto" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="ArrayOfRenglon">
@@ -207,6 +208,8 @@
           <s:element minOccurs="0" maxOccurs="1" name="DiaDEEmision" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="CantPautada" type="s:int" />
           <s:element minOccurs="1" maxOccurs="1" name="SegPautado" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CantEmitida" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SegEmitido" type="s:int" />
         </s:sequence>
       </s:complexType>
     </s:schema>

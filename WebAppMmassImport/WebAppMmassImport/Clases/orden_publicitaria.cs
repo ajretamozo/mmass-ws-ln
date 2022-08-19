@@ -85,6 +85,8 @@ namespace WebAppMmassImport.Clases
         public string Comentarios { get; set; } 
         public int TotalGralMenciones { get; set; }
         public string FechaVencimiento { get; set; }
+        public string XMLCompleto { get; set; }
+        
         public List<renglon> Renglones; 
 
 
@@ -100,7 +102,7 @@ namespace WebAppMmassImport.Clases
                 int Mes = int.Parse(periodoStg.Substring(4));
                 int nro_orden = 0;
                 bool esUpdate = false;
-                //para strings con apóstrofe
+                // Para strings con apóstrofe
                 RazSocAgencia = RazSocAgencia.Replace("'", @"''");
                 RazSocAnunciante = RazSocAnunciante.Replace("'", @"''");
                 Sennal = Sennal.Replace("'", @"''");
@@ -153,6 +155,9 @@ namespace WebAppMmassImport.Clases
                           "id_condpagoap=1, id_tipoorden=1, id_representacion=1, tipo_orden=0, nro_orden_ag=@nro_orden_ag, estadoaprobcred=1, es_preventa=0 " +
                           "where id_op = @id_op";
                 }
+
+                // Se graba LOG con el XML recibido en la tabla 'auditoria'
+                grabarLog(IdOPMMASS, esUpdate, XMLCompleto);
 
                 List<SqlParameter> parametros = new List<SqlParameter>();
                 parametros.Add(new SqlParameter() { ParameterName = "@id_op", SqlDbType = SqlDbType.Int, Value = IdOPMMASS });
@@ -1257,7 +1262,7 @@ namespace WebAppMmassImport.Clases
 
         public static respuestaMenciones consulMenciones(string fechaDesde, string fechaHasta)
         {
-            string sqlCommand = @"SELECT m.id_externo, p.desc_programaX,
+            string sqlCommand = @"SELECT m.id_externo, p.desc_programa,
                             CASE
                             WHEN m.id_programa IS NULL THEN m.horadesde
                             WHEN m.id_programa IS NOT NULL THEN (SELECT hs_desde from emisiones_pgma WHERE id_programa=m.id_programa AND id_emisiones_pgma=m.id_emisiones_pgma)
@@ -1351,6 +1356,44 @@ namespace WebAppMmassImport.Clases
                 string[] arrHora = hora.Split(' ');
                 horaFormat = arrHora[1];
                 return horaFormat;
+            }
+        }
+
+        public void grabarLog(int idOp, bool esUpdate, string xml)
+        {
+            string accion = "";
+            if (esUpdate)
+            {
+                accion = "MODIFICACION";
+            }
+            else
+            {
+                accion = "NUEVO";
+            }
+
+            string sql = @"insert into auditoria (fechahora, objeto, clave, accion, descripcion, comentario, idusuario, borrado) 
+                           values(@fechahora, 'ORDEN PUBLICITARIA', @clave, @accion, 'Insersión desde WebService', @comentario, 1, 0)";
+
+
+            List<SqlParameter> parametros = new List<SqlParameter>()
+            {
+                new SqlParameter()
+                { ParameterName="@fechahora",SqlDbType = SqlDbType.DateTime, Value = DateTime.Now },
+                new SqlParameter()
+                { ParameterName="@clave",SqlDbType = SqlDbType.NVarChar, Value = idOp.ToString() },
+                new SqlParameter()
+                { ParameterName="@accion",SqlDbType = SqlDbType.NVarChar, Value = accion },
+                new SqlParameter()
+                { ParameterName="@comentario",SqlDbType = SqlDbType.Text, Value = xml }
+            };
+
+            try
+            {
+                DB.Execute(sql, parametros);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 

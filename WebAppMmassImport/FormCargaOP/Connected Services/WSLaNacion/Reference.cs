@@ -688,6 +688,9 @@ namespace FormCargaOP.WSLaNacion {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FechaVencimientoField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string XMLCompletoField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -928,6 +931,19 @@ namespace FormCargaOP.WSLaNacion {
                 if ((object.ReferenceEquals(this.FechaVencimientoField, value) != true)) {
                     this.FechaVencimientoField = value;
                     this.RaisePropertyChanged("FechaVencimiento");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=18)]
+        public string XMLCompleto {
+            get {
+                return this.XMLCompletoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.XMLCompletoField, value) != true)) {
+                    this.XMLCompletoField = value;
+                    this.RaisePropertyChanged("XMLCompleto");
                 }
             }
         }
@@ -1440,6 +1456,10 @@ namespace FormCargaOP.WSLaNacion {
         
         private int SegPautadoField;
         
+        private int CantEmitidaField;
+        
+        private int SegEmitidoField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -1550,6 +1570,32 @@ namespace FormCargaOP.WSLaNacion {
                 if ((this.SegPautadoField.Equals(value) != true)) {
                     this.SegPautadoField = value;
                     this.RaisePropertyChanged("SegPautado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=8)]
+        public int CantEmitida {
+            get {
+                return this.CantEmitidaField;
+            }
+            set {
+                if ((this.CantEmitidaField.Equals(value) != true)) {
+                    this.CantEmitidaField = value;
+                    this.RaisePropertyChanged("CantEmitida");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
+        public int SegEmitido {
+            get {
+                return this.SegEmitidoField;
+            }
+            set {
+                if ((this.SegEmitidoField.Equals(value) != true)) {
+                    this.SegEmitidoField = value;
+                    this.RaisePropertyChanged("SegEmitido");
                 }
             }
         }
