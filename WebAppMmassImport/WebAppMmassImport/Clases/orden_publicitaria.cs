@@ -977,10 +977,16 @@ namespace WebAppMmassImport.Clases
                             new SqlParameter()
                             { ParameterName="@importe",SqlDbType = SqlDbType.Decimal, Value = dur * precioSeg },
                             new SqlParameter()
-                            { ParameterName="@importe_neto",SqlDbType = SqlDbType.Decimal, Value = dur * precioSeg },
-                            new SqlParameter()
-                            { ParameterName="@id_externo",SqlDbType = SqlDbType.NVarChar, Value = men.IdAvisoNotables }
+                            { ParameterName="@importe_neto",SqlDbType = SqlDbType.Decimal, Value = dur * precioSeg }
                         };
+            if (men.IdAvisoNotables != null)
+            {
+                parametrosM.Add(new SqlParameter() { ParameterName = "@id_externo", SqlDbType = SqlDbType.NVarChar, Value = men.IdAvisoNotables });
+            }
+            else
+            {
+                parametrosM.Add(new SqlParameter() { ParameterName = "@id_externo", SqlDbType = SqlDbType.NVarChar, Value = DBNull.Value });
+            }
 
             if (idProg != 0 && idEmi != 0)
             {
@@ -1262,7 +1268,17 @@ namespace WebAppMmassImport.Clases
 
         public static respuestaMenciones consulMenciones(string fechaDesde, string fechaHasta)
         {
-            string sqlCommand = @"SELECT m.id_externo, p.desc_programa,
+            string sqlCommand = @"SELECT 
+                            CASE
+                            WHEN m.id_externo IS NULL THEN ''
+                            WHEN m.id_externo IS NOT NULL THEN m.id_externo
+                            END
+                            AS id_externo,
+							CASE
+                            WHEN p.desc_programa IS NULL THEN ''
+                            WHEN p.desc_programa IS NOT NULL THEN p.desc_programa
+                            END
+                            AS desc_programa,
                             CASE
                             WHEN m.id_programa IS NULL THEN m.horadesde
                             WHEN m.id_programa IS NOT NULL THEN (SELECT hs_desde from emisiones_pgma WHERE id_programa=m.id_programa AND id_emisiones_pgma=m.id_emisiones_pgma)
@@ -1382,10 +1398,16 @@ namespace WebAppMmassImport.Clases
                 new SqlParameter()
                 { ParameterName="@clave",SqlDbType = SqlDbType.NVarChar, Value = idOp.ToString() },
                 new SqlParameter()
-                { ParameterName="@accion",SqlDbType = SqlDbType.NVarChar, Value = accion },
-                new SqlParameter()
-                { ParameterName="@comentario",SqlDbType = SqlDbType.Text, Value = xml }
+                { ParameterName="@accion",SqlDbType = SqlDbType.NVarChar, Value = accion }
             };
+            if (xml != null)
+            {
+                parametros.Add(new SqlParameter() { ParameterName = "@comentario", SqlDbType = SqlDbType.Text, Value = xml });
+            }
+            else
+            {
+                parametros.Add(new SqlParameter() { ParameterName = "@comentario", SqlDbType = SqlDbType.Text, Value = DBNull.Value });
+            }
 
             try
             {
