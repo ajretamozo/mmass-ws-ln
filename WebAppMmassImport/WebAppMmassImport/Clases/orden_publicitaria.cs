@@ -328,7 +328,7 @@ namespace WebAppMmassImport.Clases
                     {
                         idDetalle = DB.DInt(item["id_detalle"].ToString());
                         
-                        string sqlCommand = "select id_menciones from menciones where id_op =" + IdOPMMASS.ToString() + " and id_detalle =" + idDetalle.ToString();
+                        string sqlCommand = "select top 1 id_menciones from menciones where id_op =" + IdOPMMASS.ToString() + " and id_detalle =" + idDetalle.ToString();
                         DataTable t = DB.Select(sqlCommand);
                         if (t.Rows.Count == 0)
                         {
@@ -1269,34 +1269,19 @@ namespace WebAppMmassImport.Clases
         public static respuestaMenciones consulMenciones(string fechaDesde, string fechaHasta)
         {
             string sqlCommand = @"SELECT 
-                            CASE
-                            WHEN m.id_externo IS NULL THEN ''
-                            WHEN m.id_externo IS NOT NULL THEN m.id_externo
-                            END
-                            AS id_externo,
-							CASE
-                            WHEN p.desc_programa IS NULL THEN ''
-                            WHEN p.desc_programa IS NOT NULL THEN p.desc_programa
-                            END
-                            AS desc_programa,
-                            CASE
-                            WHEN m.id_programa IS NULL THEN m.horadesde
-                            WHEN m.id_programa IS NOT NULL THEN (SELECT hs_desde from emisiones_pgma WHERE id_programa=m.id_programa AND id_emisiones_pgma=m.id_emisiones_pgma)
-                            END
-                            AS HoraDesde,
-                            CASE
-                            WHEN m.id_programa IS NULL THEN m.horahasta
-                            WHEN m.id_programa IS NOT NULL THEN (SELECT hs_hasta FROM emisiones_pgma WHERE id_programa=m.id_programa AND id_emisiones_pgma=m.id_emisiones_pgma)
-                            END
-                            AS HoraHasta, 
-                            dta.etiqueta, m.fecharutina, COUNT(*) AS CantPautada, SUM(m.duracion) AS SegPautado,
-                            SUM(CASE WHEN ISNULL(m.duracion_real, 0) > 0 THEN 1 ELSE 0 END) AS CantEmitida,
-                            SUM(ISNULL(m.duracion_real, 0)) AS SegEmitido
-                            FROM menciones m
-                            LEFT JOIN programas p ON p.id_programa = m.id_programa
-                            LEFT JOIN temas t ON t.id_tema = m.id_tema
-                            LEFT JOIN dur_tema_as dta ON dta.id_tema = t.id_tema
-                            WHERE m.fecharutina BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "' GROUP BY m.id_externo, p.desc_programa, m.horadesde, m.horahasta, dta.etiqueta, m.fecharutina, m.id_programa, m.id_emisiones_pgma ORDER BY m.fecharutina DESC";
+                                ISNULL(m.id_externo,'') AS id_externo,
+                                ISNULL (p.desc_programa, '') AS desc_programa,
+                                ISNULL(m.horadesde, MAX(E.hs_desde)) AS HoraDesde,
+                                ISNULL(m.horahasta, ISNULL(MAX(E.hs_hasta), ISNULL(m.horadesde, MAX(E.hs_desde)))) AS HoraHasta, 
+                                dta.etiqueta, m.fecharutina, COUNT(*) AS CantPautada, SUM(m.duracion) AS SegPautado,
+                                SUM(CASE WHEN ISNULL(m.duracion_real, 0) > 0 THEN 1 ELSE 0 END) AS CantEmitida,
+                                SUM(ISNULL(m.duracion_real, 0)) AS SegEmitido
+                                FROM menciones m
+                                LEFT OUTER JOIN programas p ON p.id_programa = m.id_programa
+                                LEFT OUTER JOIN emisiones_pgma E ON M.id_programa=e.id_programa AND M.id_emisiones_pgma=E.id_emisiones_pgma
+                                LEFT JOIN temas t ON t.id_tema = m.id_tema
+                                LEFT JOIN dur_tema_as dta ON dta.id_tema = t.id_tema
+                                WHERE m.fecharutina BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "' GROUP BY m.id_externo, p.desc_programa, m.horadesde, m.horahasta, dta.etiqueta, m.fecharutina, m.id_programa, m.id_emisiones_pgma ORDER BY m.fecharutina DESC";
 
             respuestaMenciones respMenciones = new respuestaMenciones();   
 
@@ -1312,16 +1297,72 @@ namespace WebAppMmassImport.Clases
                         respMencion = new respuestaMencion
                         {
                             IdAvisoNotables = item["id_externo"].ToString(),
-                            ProgramaDescripcion = item["desc_programa"].ToString(),
-                            HoraDesdeCompraBloqHorario = ((DateTime)item["horadesde"]).ToString("hh:mm:ss"),
-                            HoraHastaCompraBloqHorario = ((DateTime)item["horahasta"]).ToString("hh:mm:ss"),
-                            CodigoMaterial = item["etiqueta"].ToString(),
-                            DiaDEEmision = ((DateTime)item["fecharutina"]).ToString("yyyy-MM-dd"),
-                            CantPautada = int.Parse(item["CantPautada"].ToString()),
-                            SegPautado = int.Parse(item["SegPautado"].ToString()),
-                            CantEmitida = int.Parse(item["CantEmitida"].ToString()),
-                            SegEmitido = int.Parse(item["SegEmitido"].ToString())
+                            ProgramaDescripcion = item["desc_programa"].ToString()
                         };
+                        if (item["horadesde"].ToString() == ""){
+                            respMencion.HoraDesdeCompraBloqHorario = "";
+                        }
+                        else
+                        {
+                            respMencion.HoraDesdeCompraBloqHorario = ((DateTime)item["horadesde"]).ToString("HH:mm:ss");
+                        }
+                        if (item["horahasta"].ToString() == "")
+                        {
+                            respMencion.HoraHastaCompraBloqHorario = "";
+                        }
+                        else
+                        {
+                            respMencion.HoraHastaCompraBloqHorario = ((DateTime)item["horahasta"]).ToString("HH:mm:ss");
+                        }
+                        if (item["etiqueta"].ToString() == "")
+                        {
+                            respMencion.CodigoMaterial = "";
+                        }
+                        else
+                        {
+                            respMencion.CodigoMaterial = item["etiqueta"].ToString();
+                        }
+                        if (item["fecharutina"].ToString() == "")
+                        {
+                            respMencion.DiaDEEmision = "";
+                        }
+                        else
+                        {
+                            respMencion.DiaDEEmision = ((DateTime)item["fecharutina"]).ToString("yyyy-MM-dd");
+                        }
+                        if (item["CantPautada"].ToString() == "")
+                        {
+                            respMencion.CantPautada = 0;
+                        }
+                        else
+                        {
+                            respMencion.CantPautada = int.Parse(item["CantPautada"].ToString());
+                        }
+                        if (item["SegPautado"].ToString() == "")
+                        {
+                            respMencion.SegPautado = 0;
+                        }
+                        else
+                        {
+                            respMencion.SegPautado = int.Parse(item["SegPautado"].ToString());
+                        }
+                        if (item["CantEmitida"].ToString() == "")
+                        {
+                            respMencion.CantEmitida = 0;
+                        }
+                        else
+                        {
+                            respMencion.CantEmitida = int.Parse(item["CantEmitida"].ToString());
+                        }
+                        if (item["SegEmitido"].ToString() == "")
+                        {
+                            respMencion.SegEmitido = 0;
+                        }
+                        else
+                        {
+                            respMencion.SegEmitido = int.Parse(item["SegEmitido"].ToString());
+                        }
+
                         respMenciones.resMenciones.Add(respMencion);
                     }
                     respMenciones.Estado = "OK";
