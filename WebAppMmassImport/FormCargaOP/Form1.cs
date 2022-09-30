@@ -310,18 +310,17 @@ namespace FormCargaOP
                 op.RazSocAgencia = "DIRECTO";
                 op.CUIAnunciante = "A25576";
                 op.RazSocAnunciante = "SA LA NACION";
-                op.Periodo = 202208;
+                op.Periodo = 202209;
                 op.Sennal = "LN+";
                 op.NroOP = "7000010870";
                 op.NroOrden = "2022-0000";
-                op.IdOPMMASS = 7641;
+                op.IdOPMMASS = 7787;
                 op.MarcaDescripcion = "LAS MARIAS";
                 op.ResponsableOrden = "Sebastian Rolando";
-                op.Comentarios = "modif 6 menciones perdidas 10";
-                op.FechaVencimiento = "2022-08-31";
+                op.Comentarios = "cartel diferencias 17 upd 2";
+                op.FechaVencimiento = "2022-09-30";
                 op.CompetitivoDescripcion = "VARIOS";
-                op.TotalGralMenciones = 8;
-                op.XMLCompleto = null;
+                op.TotalGralMenciones = 9;
 
                 WSLaNacion.renglon ren1 = new WSLaNacion.renglon();
                 WSLaNacion.renglon ren2 = new WSLaNacion.renglon();
@@ -348,25 +347,25 @@ namespace FormCargaOP
 
 
                 ren1.NroDeRenglon = 1;
-                ren1.ProgramaDescripcion = "";
-                ren1.HoraDesdeCompraBloqHorario = "14:00:00";
-                ren1.HoraHastaCompraBloqHorario = "14:59:59";
-                ren1.Duracion = 1;
+                ren1.ProgramaDescripcion = "EL NOTICIERO";
+                ren1.HoraDesdeCompraBloqHorario = "18:10:00";
+                ren1.HoraHastaCompraBloqHorario = "18:59:59";
+                ren1.Duracion = 5;
                 ren1.CodigoMaterial = "1";
                 ren1.TemaMaterialusar = "A_18479_LAS MARIAS_Las Marias_1";
-                ren1.TipoPublicidad = "Auspicio";
-                ren1.PrecioSegundo = 40000;
+                ren1.TipoPublicidad = "Tanda";
+                ren1.PrecioSegundo = 10;
 
 
                 ren2.NroDeRenglon = 2;
-                ren2.ProgramaDescripcion = "+INFO DE LA TARDE";
-                ren2.HoraDesdeCompraBloqHorario = "15:00:00";
-                ren2.HoraHastaCompraBloqHorario = "16:59:59";
-                ren2.Duracion = 1;
+                ren2.ProgramaDescripcion = "+REALIDAD";
+                ren2.HoraDesdeCompraBloqHorario = "20:10:00";
+                ren2.HoraHastaCompraBloqHorario = "20:30:00";
+                ren2.Duracion = 5;
                 ren2.CodigoMaterial = "13848";
                 ren2.TemaMaterialusar = "A_13848_MMAS-251-1140_Mat1_12";
                 ren2.TipoPublicidad = "Tanda";
-                ren2.PrecioSegundo = 10;
+                ren2.PrecioSegundo = 20;
 
                 WSLaNacion.mencion men1 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men2 = new WSLaNacion.mencion();
@@ -375,8 +374,8 @@ namespace FormCargaOP
                 WSLaNacion.mencion men5 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men6 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men7 = new WSLaNacion.mencion();
-                //WSLaNacion.mencion men8 = new WSLaNacion.mencion();
-                //WSLaNacion.mencion men9 = new WSLaNacion.mencion();
+                WSLaNacion.mencion men8 = new WSLaNacion.mencion();
+                WSLaNacion.mencion men9 = new WSLaNacion.mencion();
                 //WSLaNacion.mencion men10 = new WSLaNacion.mencion();
 
                 //men1.Ubicacion = textBox26.Text;
@@ -393,56 +392,58 @@ namespace FormCargaOP
 
 
                 men1.Ubicacion = "";
-                men1.DiaDEEmision = "2022-08-07";
+                men1.DiaDEEmision = "2022-09-26";
                 men1.TotalMenciones = 1;
                 men1.UbicacionManualOrden = 0;
                 men1.IdAvisoNotables = "1234";
 
                 men2.Ubicacion = "";
-                men2.DiaDEEmision = "2022-08-14";
+                men2.DiaDEEmision = "2022-09-27";
                 men2.TotalMenciones = 1;
                 men2.UbicacionManualOrden = 0;
                 men2.IdAvisoNotables = "4567";
 
                 men3.Ubicacion = "";
-                men3.DiaDEEmision = "2022-08-21";
+                men3.DiaDEEmision = "2022-09-28";
                 men3.TotalMenciones = 1;
                 men3.UbicacionManualOrden = 0;
                 men3.IdAvisoNotables = "7890";
 
                 men4.Ubicacion = "";
-                men4.DiaDEEmision = "2022-08-24";
+                men4.DiaDEEmision = "2022-09-29";
                 men4.TotalMenciones = 1;
                 men4.UbicacionManualOrden = 0;
                 men4.IdAvisoNotables = "102";
 
                 men5.Ubicacion = "";
-                men5.DiaDEEmision = "2022-08-23";
+                men5.DiaDEEmision = "2022-09-23";
                 men5.TotalMenciones = 1;
                 men5.UbicacionManualOrden = 0;
                 men5.IdAvisoNotables = "1099";
 
                 men6.Ubicacion = "";
-                men6.DiaDEEmision = "2022-08-25";
-                men6.TotalMenciones = 2;
+                men6.DiaDEEmision = "2022-09-27";
+                men6.TotalMenciones = 1;
                 men6.UbicacionManualOrden = 0;
                 men6.IdAvisoNotables = "10222";
 
                 men7.Ubicacion = "";
-                men7.DiaDEEmision = "2022-08-26";
+                men7.DiaDEEmision = "2022-09-28";
                 men7.TotalMenciones = 1;
                 men7.UbicacionManualOrden = 0;
                 men7.IdAvisoNotables = null;
 
-                //men8.Ubicacion = "";
-                //men8.DiaDEEmision = "2021-11-24";
-                //men8.TotalMenciones = 1;
-                //men8.UbicacionManualOrden = 0;
+                men8.Ubicacion = "";
+                men8.DiaDEEmision = "2022-09-30";
+                men8.TotalMenciones = 1;
+                men8.UbicacionManualOrden = 0;
+                men8.IdAvisoNotables = null;
 
-                //men9.Ubicacion = "";
-                //men9.DiaDEEmision = "2021-12-29";
-                //men9.TotalMenciones = 1;
-                //men9.UbicacionManualOrden = 0;
+                men9.Ubicacion = "";
+                men9.DiaDEEmision = "2022-09-30";
+                men9.TotalMenciones = 1;
+                men9.UbicacionManualOrden = 0;
+                men9.IdAvisoNotables = null;
 
                 //men10.Ubicacion = "";
                 //men10.DiaDEEmision = "2021-12-06";
@@ -454,14 +455,14 @@ namespace FormCargaOP
                 ren2.Menciones = new WSLaNacion.ArrayOfMencion();
 
                 ren1.Menciones.Add(men1);
-                ren1.Menciones.Add(men2);
+                //ren1.Menciones.Add(men2);
                 ren1.Menciones.Add(men3);
-                ren2.Menciones.Add(men4);
-                ren1.Menciones.Add(men5);
+                ren1.Menciones.Add(men4);
+                ren2.Menciones.Add(men5);
                 ren2.Menciones.Add(men6);
                 ren2.Menciones.Add(men7);
-                //ren2.Menciones.Add(men3);
-                //ren2.Menciones.Add(men4);
+                //ren1.Menciones.Add(men8);
+                ren2.Menciones.Add(men9);
                 //ren2.Menciones.Add(men10);
 
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
@@ -485,8 +486,8 @@ namespace FormCargaOP
 
                 WSLaNacion.orden_publicitaria op = new WSLaNacion.orden_publicitaria();
 
-                string fechaDesde = "2022-08-19";
-                string fechaHasta = "2022-08-19";
+                string fechaDesde = "2022-09-01";
+                string fechaHasta = "2022-09-20";
 
                 var respuesta = client.consultarMenciones(fechaDesde, fechaHasta);
 

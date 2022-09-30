@@ -7,6 +7,7 @@ using WebAppMmassImport.Clases;
 using WebApi.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.Script.Serialization;
 
 
 namespace WebAppMmassImport
@@ -22,11 +23,6 @@ namespace WebAppMmassImport
     public class wsimport : System.Web.Services.WebService
     {
         [WebMethod]
-        public string HelloWorld()
-        {
-            return "Hola a todos";
-        }
-        [WebMethod]
         public string addContacto(contactos registro)
         {
             resultado res = registro.grabarContacto();
@@ -39,6 +35,10 @@ namespace WebAppMmassImport
             resp.Estado = "VALIDACION";
             resp.Id = registro.IdOPMMASS;
             bool error = false;
+
+            int update = registro.IdOPMMASS;
+            var jsonString = new JavaScriptSerializer();
+            var jsonStringResult = jsonString.Serialize(registro);
 
             if (registro.getIdEmpresa(registro.Empresa) == 0)
             {
@@ -418,12 +418,12 @@ namespace WebAppMmassImport
 
             if (error == false)
             {
-                return registro.saveOrden();
+                resp = registro.saveOrden();
+
+                // Se graba LOG con el XML recibido en la tabla 'auditoria'
+                registro.grabarLog(update, resp.Id, jsonStringResult);
             }
-            else
-            {
-                return resp;
-            }
+            return resp;
         }
 
         [WebMethod]

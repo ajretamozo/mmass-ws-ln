@@ -38,11 +38,11 @@ namespace WebAppMmassImport.Clases
         public List<respuestaMencion> resMenciones;
     }
 
-    public class montos
-    {
-        public double monto { get; set; }
-        public int segundos { get; set; }
-    }
+    //public class montos
+    //{
+    //    public double monto { get; set; }
+    //    public int segundos { get; set; }
+    //}
 
     public class mencion
     {
@@ -85,7 +85,7 @@ namespace WebAppMmassImport.Clases
         public string Comentarios { get; set; } 
         public int TotalGralMenciones { get; set; }
         public string FechaVencimiento { get; set; }
-        public string XMLCompleto { get; set; }
+
         
         public List<renglon> Renglones; 
 
@@ -155,9 +155,6 @@ namespace WebAppMmassImport.Clases
                           "id_condpagoap=1, id_tipoorden=1, id_representacion=1, tipo_orden=0, nro_orden_ag=@nro_orden_ag, estadoaprobcred=1, es_preventa=0 " +
                           "where id_op = @id_op";
                 }
-
-                // Se graba LOG con el XML recibido en la tabla 'auditoria'
-                grabarLog(IdOPMMASS, esUpdate, XMLCompleto);
 
                 List<SqlParameter> parametros = new List<SqlParameter>();
                 parametros.Add(new SqlParameter() { ParameterName = "@id_op", SqlDbType = SqlDbType.Int, Value = IdOPMMASS });
@@ -336,16 +333,25 @@ namespace WebAppMmassImport.Clases
                         }
                     }
 
-                    montos mon = new montos();
-                    double montoTotal = 0;
-                    int segPag = 0;
+                    //montos mon = new montos();
+                    //double montoTotal = 0;
+                    //int segPag = 0;
 
                     foreach (renglon elem in Renglones)
                     {
                         elem.ProgramaDescripcion = elem.ProgramaDescripcion.Replace("'", @"''");
-                        mon = saveRenglon(elem, Anio, Mes, Id_producto, Id_anunciante, Id_medio, Fecha, fechaVen, nro_orden, Id_empresa, esUpdate);
-                        montoTotal += mon.monto;
-                        segPag += mon.segundos;
+                        saveRenglon(elem, Anio, Mes, Id_producto, Id_anunciante, Id_medio, Fecha, fechaVen, nro_orden, Id_empresa, esUpdate);
+                        //montoTotal += mon.monto;
+                        //segPag += mon.segundos;
+                    }
+
+                    int segPag = 0;
+                    double montoTotal = 0;
+                    DataTable dt = DB.Select("SELECT SUM(seg_pag) AS segTotales, SUM(monto_bruto) AS monTotal FROM orden_pub_as WHERE id_op = " + IdOPMMASS);
+                    if (dt.Rows.Count == 1)
+                    {
+                        segPag = int.Parse(dt.Rows[0]["segTotales"].ToString());
+                        montoTotal = double.Parse(dt.Rows[0]["monTotal"].ToString());
                     }
 
                     string sqlOp2 = "update orden_pub_ap set monto_bruto=@monto_bruto, primer_neto=@primer_neto, seg_neto=@seg_neto, tercer_neto=@tercer_neto, " +
@@ -552,9 +558,9 @@ namespace WebAppMmassImport.Clases
         }
 
  
-        public montos saveRenglon(renglon reng, int anio, int mes, int idProd, int idAnun, int idMedio, DateTime fechaD, DateTime fechaH, int nro_orden, int idEmpresa, bool esUpdate)
+        public void saveRenglon(renglon reng, int anio, int mes, int idProd, int idAnun, int idMedio, DateTime fechaD, DateTime fechaH, int nro_orden, int idEmpresa, bool esUpdate)
         {
-            montos mon = new montos();
+            //montos mon = new montos();
 
             string sqlCommand1 = "select id_detalle from orden_pub_as where id_op = " + IdOPMMASS + " and id_detalle = " + reng.NroDeRenglon;
 
@@ -701,6 +707,9 @@ namespace WebAppMmassImport.Clases
                     if (tm.Rows.Count == 1)
                     {
                         contadorSpots = DB.DInt(tm.Rows[0]["spots"].ToString());
+
+                        //Actualizo el precio de las menciones pasadas
+                        DB.Execute("UPDATE menciones SET importe = " + reng.Duracion*reng.PrecioSegundo + ", importe_neto = " + reng.Duracion * reng.PrecioSegundo + "  WHERE id_op=" + IdOPMMASS + " and id_detalle=" + reng.NroDeRenglon);
                     }
                 }
                 foreach (mencion elem in reng.Menciones)
@@ -731,7 +740,6 @@ namespace WebAppMmassImport.Clases
                                 saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
                             }
                             cont++;
-                            //mon.monto += reng.Duracion * reng.PrecioSegundo;
                         }
                     }
                     else
@@ -740,12 +748,22 @@ namespace WebAppMmassImport.Clases
                         {
                             saveMencion(elem, anio, mes, nro_orden, reng.NroDeRenglon, reng.TemaMaterialusar, idTema, reng.Duracion, idAnun, idMedio, horaD, horaH, idProd, idCategoria, esPnt, reng.PrecioSegundo, idProg, idEmi);
                             cont++;
-                            //mon.monto += reng.Duracion * reng.PrecioSegundo;
                         }
                     } 
                 }
-                mon.segundos = contadorSpots * reng.Duracion;
-                mon.monto = mon.segundos * reng.PrecioSegundo;
+                //mon.segundos = contadorSpots * reng.Duracion;
+                //mon.monto = mon.segundos * reng.PrecioSegundo;
+
+                int cantMenciones = 0;
+                int segundos = 0;
+                double monto = 0;
+                DataTable dt = DB.Select("SELECT COUNT(*) AS cantidad, SUM(seg_pagos) AS segundos FROM menciones WHERE id_op = " + IdOPMMASS + " AND id_detalle = " + reng.NroDeRenglon);
+                if (dt.Rows.Count == 1)
+                {
+                    segundos = int.Parse(dt.Rows[0]["segundos"].ToString());
+                    cantMenciones = int.Parse(dt.Rows[0]["cantidad"].ToString());
+                    monto = segundos * reng.PrecioSegundo;
+                }
 
                 string sqlR2 = "update orden_pub_as set cant_spot=@cant_spot, seg_pag=@seg_pag, valor_mencion=@valor_mencion, monto_bruto=@monto_bruto, monto_neto=@monto_neto where id_op = @id_op and anio=@anio and mes=@mes and nro_orden=@nro_orden and id_detalle=@id_detalle";
                 List<SqlParameter> parametrosR2 = new List<SqlParameter>()
@@ -760,16 +778,26 @@ namespace WebAppMmassImport.Clases
                     { ParameterName="@nro_orden",SqlDbType = SqlDbType.Int, Value =  DB.DInt(nro_orden) },
                     new SqlParameter()
                     { ParameterName="@id_detalle",SqlDbType = SqlDbType.Int, Value = reng.NroDeRenglon },
+                    //new SqlParameter()
+                    //{ ParameterName = "@cant_spot", SqlDbType = SqlDbType.Int, Value = contadorSpots },
                     new SqlParameter()
-                    { ParameterName = "@cant_spot", SqlDbType = SqlDbType.Int, Value = contadorSpots },
+                    { ParameterName = "@cant_spot", SqlDbType = SqlDbType.Int, Value = cantMenciones },
+                    //new SqlParameter()
+                    //{ ParameterName = "@seg_pag", SqlDbType = SqlDbType.Int, Value = mon.segundos },
+                    //new SqlParameter()
+                    //{ ParameterName="@valor_mencion",SqlDbType = SqlDbType.Decimal, Value = mon.monto },
+                    //new SqlParameter()
+                    //{ ParameterName="@monto_bruto",SqlDbType = SqlDbType.Decimal, Value = mon.monto },
+                    //new SqlParameter()
+                    //{ ParameterName="@monto_neto",SqlDbType = SqlDbType.Decimal, Value = mon.monto }
                     new SqlParameter()
-                    { ParameterName = "@seg_pag", SqlDbType = SqlDbType.Int, Value = mon.segundos },
+                    { ParameterName = "@seg_pag", SqlDbType = SqlDbType.Int, Value = segundos },
                     new SqlParameter()
-                    { ParameterName="@valor_mencion",SqlDbType = SqlDbType.Decimal, Value = mon.monto },
+                    { ParameterName="@valor_mencion",SqlDbType = SqlDbType.Decimal, Value = monto },
                     new SqlParameter()
-                    { ParameterName="@monto_bruto",SqlDbType = SqlDbType.Decimal, Value = mon.monto },
+                    { ParameterName="@monto_bruto",SqlDbType = SqlDbType.Decimal, Value = monto },
                     new SqlParameter()
-                    { ParameterName="@monto_neto",SqlDbType = SqlDbType.Decimal, Value = mon.monto }
+                    { ParameterName="@monto_neto",SqlDbType = SqlDbType.Decimal, Value = monto }
                 };
                 DB.Execute(sqlR2, parametrosR2);
             }
@@ -777,7 +805,7 @@ namespace WebAppMmassImport.Clases
             {
                 Console.WriteLine(ex.Message);
             }
-            return mon;
+            //return mon;
         }
 
         public int comprobarPrograma(string desc)
@@ -1274,7 +1302,7 @@ namespace WebAppMmassImport.Clases
                                 ISNULL(m.horadesde, MAX(E.hs_desde)) AS HoraDesde,
                                 ISNULL(m.horahasta, ISNULL(MAX(E.hs_hasta), ISNULL(m.horadesde, MAX(E.hs_desde)))) AS HoraHasta, 
                                 dta.etiqueta, m.fecharutina, COUNT(*) AS CantPautada, SUM(m.duracion) AS SegPautado,
-                                SUM(CASE WHEN ISNULL(m.duracion_real, 0) > 0 THEN 1 ELSE 0 END) AS CantEmitida,
+                                COUNT(m.hora_real) as CantEmitida,
                                 SUM(ISNULL(m.duracion_real, 0)) AS SegEmitido
                                 FROM menciones m
                                 LEFT OUTER JOIN programas p ON p.id_programa = m.id_programa
@@ -1383,16 +1411,16 @@ namespace WebAppMmassImport.Clases
             return respMenciones;
         }
 
-        public void grabarLog(int idOp, bool esUpdate, string xml)
+        public void grabarLog(int update, int idOp, string xml)
         {
             string accion = "";
-            if (esUpdate)
+            if (update == 0)
             {
-                accion = "MODIFICACION";
+                accion = "NUEVO";
             }
             else
             {
-                accion = "NUEVO";
+                accion = "MODIFICACION";
             }
 
             string sql = @"insert into auditoria (fechahora, objeto, clave, accion, descripcion, comentario, idusuario, borrado) 
