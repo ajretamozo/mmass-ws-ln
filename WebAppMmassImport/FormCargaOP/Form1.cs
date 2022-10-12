@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FormCargaOP
 {
@@ -303,24 +304,23 @@ namespace FormCargaOP
                 //</soap:Envelope>
 
 
-
                 op.Empresa = "SAPU";
                 op.Estado = 3;
-                op.CUIAgencia = "DIRECTO";
-                op.RazSocAgencia = "DIRECTO";
-                op.CUIAnunciante = "A25576";
-                op.RazSocAnunciante = "SA LA NACION";
-                op.Periodo = 202209;
+                op.CUIAgencia = "A05370088";
+                op.RazSocAgencia = "FORMATOS NO TRADICIONALES S.A.";
+                op.CUIAnunciante = "A05367604";
+                op.RazSocAnunciante = "NINGBO SA";
+                op.Periodo = 202210;
                 op.Sennal = "LN+";
-                op.NroOP = "7000010870";
-                op.NroOrden = "2022-0000";
-                op.IdOPMMASS = 7787;
-                op.MarcaDescripcion = "LAS MARIAS";
-                op.ResponsableOrden = "Sebastian Rolando";
-                op.Comentarios = "cartel diferencias 17 upd 2";
-                op.FechaVencimiento = "2022-09-30";
-                op.CompetitivoDescripcion = "VARIOS";
-                op.TotalGralMenciones = 9;
+                op.NroOP = "7000014733";
+                op.NroOrden = "0006_2022";
+                op.IdOPMMASS = 8109;
+                op.MarcaDescripcion = "SAPHIRUS";
+                op.ResponsableOrden = "Silvia Malloggi";
+                op.Comentarios = "prueba orden no guarda menciones 1 upd 1";
+                op.FechaVencimiento = "2022-10-31";
+                op.CompetitivoDescripcion = "CONSUMO MASIVO ; HIGIENE ; LIMPIEZA";
+                op.TotalGralMenciones = 12;
 
                 WSLaNacion.renglon ren1 = new WSLaNacion.renglon();
                 WSLaNacion.renglon ren2 = new WSLaNacion.renglon();
@@ -347,14 +347,14 @@ namespace FormCargaOP
 
 
                 ren1.NroDeRenglon = 1;
-                ren1.ProgramaDescripcion = "EL NOTICIERO";
-                ren1.HoraDesdeCompraBloqHorario = "18:10:00";
-                ren1.HoraHastaCompraBloqHorario = "18:59:59";
-                ren1.Duracion = 5;
-                ren1.CodigoMaterial = "1";
-                ren1.TemaMaterialusar = "A_18479_LAS MARIAS_Las Marias_1";
+                ren1.ProgramaDescripcion = "";
+                ren1.HoraDesdeCompraBloqHorario = "18:00:00";
+                ren1.HoraHastaCompraBloqHorario = "00:00:00";
+                ren1.Duracion = 15;
+                ren1.CodigoMaterial = "19649";
+                ren1.TemaMaterialusar = "A_19649_SAPHIRUS_Saphirus Bailar_15";
                 ren1.TipoPublicidad = "Tanda";
-                ren1.PrecioSegundo = 10;
+                ren1.PrecioSegundo = 2171.43;
 
 
                 ren2.NroDeRenglon = 2;
@@ -376,7 +376,9 @@ namespace FormCargaOP
                 WSLaNacion.mencion men7 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men8 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men9 = new WSLaNacion.mencion();
-                //WSLaNacion.mencion men10 = new WSLaNacion.mencion();
+                WSLaNacion.mencion men10 = new WSLaNacion.mencion();
+                WSLaNacion.mencion men11 = new WSLaNacion.mencion();
+                WSLaNacion.mencion men12 = new WSLaNacion.mencion();
 
                 //men1.Ubicacion = textBox26.Text;
                 //men1.DiaDEEmision = textBox25.Text;
@@ -392,83 +394,97 @@ namespace FormCargaOP
 
 
                 men1.Ubicacion = "";
-                men1.DiaDEEmision = "2022-09-26";
+                men1.DiaDEEmision = "2022-10-03";
                 men1.TotalMenciones = 1;
                 men1.UbicacionManualOrden = 0;
-                men1.IdAvisoNotables = "1234";
+                men1.IdAvisoNotables = "1203105232";
 
                 men2.Ubicacion = "";
-                men2.DiaDEEmision = "2022-09-27";
+                men2.DiaDEEmision = "2022-10-05";
                 men2.TotalMenciones = 1;
                 men2.UbicacionManualOrden = 0;
-                men2.IdAvisoNotables = "4567";
+                men2.IdAvisoNotables = "1205105214";
 
                 men3.Ubicacion = "";
-                men3.DiaDEEmision = "2022-09-28";
+                men3.DiaDEEmision = "2022-10-07";
                 men3.TotalMenciones = 1;
                 men3.UbicacionManualOrden = 0;
-                men3.IdAvisoNotables = "7890";
+                men3.IdAvisoNotables = "1207105162";
 
                 men4.Ubicacion = "";
-                men4.DiaDEEmision = "2022-09-29";
+                men4.DiaDEEmision = "2022-10-10";
                 men4.TotalMenciones = 1;
                 men4.UbicacionManualOrden = 0;
-                men4.IdAvisoNotables = "102";
+                men4.IdAvisoNotables = "1210105197";
 
                 men5.Ubicacion = "";
-                men5.DiaDEEmision = "2022-09-23";
+                men5.DiaDEEmision = "2022-10-12";
                 men5.TotalMenciones = 1;
                 men5.UbicacionManualOrden = 0;
-                men5.IdAvisoNotables = "1099";
+                men5.IdAvisoNotables = "1212105189";
 
                 men6.Ubicacion = "";
-                men6.DiaDEEmision = "2022-09-27";
+                men6.DiaDEEmision = "2022-10-14";
                 men6.TotalMenciones = 1;
                 men6.UbicacionManualOrden = 0;
-                men6.IdAvisoNotables = "10222";
+                men6.IdAvisoNotables = "1214105149";
 
                 men7.Ubicacion = "";
-                men7.DiaDEEmision = "2022-09-28";
+                men7.DiaDEEmision = "2022-10-17";
                 men7.TotalMenciones = 1;
                 men7.UbicacionManualOrden = 0;
-                men7.IdAvisoNotables = null;
+                men7.IdAvisoNotables = "1217105158";
 
                 men8.Ubicacion = "";
-                men8.DiaDEEmision = "2022-09-30";
+                men8.DiaDEEmision = "2022-10-19";
                 men8.TotalMenciones = 1;
                 men8.UbicacionManualOrden = 0;
-                men8.IdAvisoNotables = null;
+                men8.IdAvisoNotables = "1219105132";
 
                 men9.Ubicacion = "";
-                men9.DiaDEEmision = "2022-09-30";
+                men9.DiaDEEmision = "2022-10-21";
                 men9.TotalMenciones = 1;
                 men9.UbicacionManualOrden = 0;
-                men9.IdAvisoNotables = null;
+                men9.IdAvisoNotables = "1221105106";
 
-                //men10.Ubicacion = "";
-                //men10.DiaDEEmision = "2021-12-06";
-                //men10.TotalMenciones = 1;
-                //men10.UbicacionManualOrden = 0;
+                men10.Ubicacion = "";
+                men10.DiaDEEmision = "2022-10-24";
+                men10.TotalMenciones = 1;
+                men10.UbicacionManualOrden = 0;
+                men10.IdAvisoNotables = "1224105128";
 
+                men11.Ubicacion = "";
+                men11.DiaDEEmision = "2022-10-26";
+                men11.TotalMenciones = 1;
+                men11.UbicacionManualOrden = 0;
+                men11.IdAvisoNotables = "1226105106";
+
+                men12.Ubicacion = "";
+                men12.DiaDEEmision = "2022-10-28";
+                men12.TotalMenciones = 1;
+                men12.UbicacionManualOrden = 0;
+                men12.IdAvisoNotables = "1228105089";
 
                 ren1.Menciones = new WSLaNacion.ArrayOfMencion();
                 ren2.Menciones = new WSLaNacion.ArrayOfMencion();
 
                 ren1.Menciones.Add(men1);
-                //ren1.Menciones.Add(men2);
+                ren1.Menciones.Add(men2);
                 ren1.Menciones.Add(men3);
                 ren1.Menciones.Add(men4);
-                ren2.Menciones.Add(men5);
-                ren2.Menciones.Add(men6);
-                ren2.Menciones.Add(men7);
-                //ren1.Menciones.Add(men8);
-                ren2.Menciones.Add(men9);
-                //ren2.Menciones.Add(men10);
+                ren1.Menciones.Add(men5);
+                ren1.Menciones.Add(men6);
+                ren1.Menciones.Add(men7);
+                ren1.Menciones.Add(men8);
+                ren1.Menciones.Add(men9);
+                ren1.Menciones.Add(men10);
+                ren1.Menciones.Add(men11);
+                ren1.Menciones.Add(men12);
 
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
                 op.Renglones.Add(ren1);
-                op.Renglones.Add(ren2);
+                //op.Renglones.Add(ren2);
 
                 var respuesta = client.addOrden(op);
 

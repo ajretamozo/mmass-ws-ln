@@ -709,7 +709,15 @@ namespace WebAppMmassImport.Clases
                         contadorSpots = DB.DInt(tm.Rows[0]["spots"].ToString());
 
                         //Actualizo el precio de las menciones pasadas
-                        DB.Execute("UPDATE menciones SET importe = " + reng.Duracion*reng.PrecioSegundo + ", importe_neto = " + reng.Duracion * reng.PrecioSegundo + "  WHERE id_op=" + IdOPMMASS + " and id_detalle=" + reng.NroDeRenglon);
+                        string sqlUm = "UPDATE menciones SET importe = @importe, importe_neto = @importe_neto WHERE id_op=" + IdOPMMASS + " and id_detalle=" + reng.NroDeRenglon;
+                        List<SqlParameter> parametrosUm = new List<SqlParameter>()
+                        {
+                            new SqlParameter()
+                            { ParameterName="@importe",SqlDbType = SqlDbType.Decimal, Value = reng.Duracion * reng.PrecioSegundo },
+                            new SqlParameter()
+                            { ParameterName="@importe_neto",SqlDbType = SqlDbType.Decimal, Value = reng.Duracion * reng.PrecioSegundo }
+                        };
+                        DB.Execute(sqlUm, parametrosUm);
                     }
                 }
                 foreach (mencion elem in reng.Menciones)
