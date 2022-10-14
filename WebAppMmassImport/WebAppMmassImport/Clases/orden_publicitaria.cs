@@ -1463,5 +1463,19 @@ namespace WebAppMmassImport.Clases
             }
         }
 
+        public bool comprobarIdOrden()
+        {
+            string sqlCommand = "SELECT id_op FROM orden_pub_ap WHERE id_op = " + IdOPMMASS;
+
+            bool resultado = false;
+
+            DataTable t = DB.Select(sqlCommand);
+            if (t.Rows.Count > 0)
+            {
+                resultado = true;
+            }
+            return resultado;
+        }
+
     }
 }

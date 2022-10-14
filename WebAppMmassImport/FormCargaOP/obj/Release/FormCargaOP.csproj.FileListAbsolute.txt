@@ -1,0 +1,11 @@
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\bin\Release\FormCargaOP.exe.config
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\bin\Release\FormCargaOP.exe
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\bin\Release\FormCargaOP.pdb
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Release\FormCargaOP.csproj.AssemblyReference.cache
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Release\FormCargaOP.csproj.SuggestedBindingRedirects.cache
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Release\FormCargaOP.Form1.resources
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Release\FormCargaOP.Properties.Resources.resources
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Release\FormCargaOP.csproj.GenerateResource.cache
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Release\FormCargaOP.csproj.CoreCompileInputs.cache
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Release\FormCargaOP.exe
+C:\Users\Terminal\Documents\GitHub\mmass-ws-ln\WebAppMmassImport\FormCargaOP\obj\Release\FormCargaOP.pdb

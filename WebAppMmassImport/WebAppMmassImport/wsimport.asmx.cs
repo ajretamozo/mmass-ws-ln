@@ -40,6 +40,15 @@ namespace WebAppMmassImport
             var jsonString = new JavaScriptSerializer();
             var jsonStringResult = jsonString.Serialize(registro);
 
+            if (registro.IdOPMMASS != 0)
+            {
+                if (!registro.comprobarIdOrden())
+                {
+                    resp.Descripcion += "El IdOPMASS enviado no existe";
+                    error = true;
+                }
+            }
+
             if (registro.getIdEmpresa(registro.Empresa) == 0)
             {
                 resp.Descripcion += " - La Empresa enviada no existe";

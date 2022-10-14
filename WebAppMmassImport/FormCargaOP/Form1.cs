@@ -314,7 +314,7 @@ namespace FormCargaOP
                 op.Sennal = "LN+";
                 op.NroOP = "7000014733";
                 op.NroOrden = "0006_2022";
-                op.IdOPMMASS = 8109;
+                op.IdOPMMASS = 8332;
                 op.MarcaDescripcion = "SAPHIRUS";
                 op.ResponsableOrden = "Silvia Malloggi";
                 op.Comentarios = "prueba orden no guarda menciones 1 upd 1";
@@ -346,7 +346,7 @@ namespace FormCargaOP
                 //ren2.PrecioSegundo = decimal.Parse(textBox35.Text);
 
 
-                ren1.NroDeRenglon = 1;
+                ren1.NroDeRenglon = 4;
                 ren1.ProgramaDescripcion = "";
                 ren1.HoraDesdeCompraBloqHorario = "18:00:00";
                 ren1.HoraHastaCompraBloqHorario = "00:00:00";
@@ -354,7 +354,7 @@ namespace FormCargaOP
                 ren1.CodigoMaterial = "19649";
                 ren1.TemaMaterialusar = "A_19649_SAPHIRUS_Saphirus Bailar_15";
                 ren1.TipoPublicidad = "Tanda";
-                ren1.PrecioSegundo = 2171.43;
+                ren1.PrecioSegundo = 2171;
 
 
                 ren2.NroDeRenglon = 2;
