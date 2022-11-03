@@ -314,13 +314,13 @@ namespace FormCargaOP
                 op.Sennal = "LN+";
                 op.NroOP = "7000014733";
                 op.NroOrden = "0006_2022";
-                op.IdOPMMASS = 8332;
+                op.IdOPMMASS = 8331;
                 op.MarcaDescripcion = "SAPHIRUS";
                 op.ResponsableOrden = "Silvia Malloggi";
-                op.Comentarios = "prueba orden no guarda menciones 1 upd 1";
+                op.Comentarios = "prueba upd op add reng 1";
                 op.FechaVencimiento = "2022-10-31";
                 op.CompetitivoDescripcion = "CONSUMO MASIVO ; HIGIENE ; LIMPIEZA";
-                op.TotalGralMenciones = 12;
+                op.TotalGralMenciones = 24;
 
                 WSLaNacion.renglon ren1 = new WSLaNacion.renglon();
                 WSLaNacion.renglon ren2 = new WSLaNacion.renglon();
@@ -354,7 +354,7 @@ namespace FormCargaOP
                 ren1.CodigoMaterial = "19649";
                 ren1.TemaMaterialusar = "A_19649_SAPHIRUS_Saphirus Bailar_15";
                 ren1.TipoPublicidad = "Tanda";
-                ren1.PrecioSegundo = 2171;
+                ren1.PrecioSegundo = 2171.35;
 
 
                 ren2.NroDeRenglon = 2;
@@ -365,7 +365,7 @@ namespace FormCargaOP
                 ren2.CodigoMaterial = "13848";
                 ren2.TemaMaterialusar = "A_13848_MMAS-251-1140_Mat1_12";
                 ren2.TipoPublicidad = "Tanda";
-                ren2.PrecioSegundo = 20;
+                ren2.PrecioSegundo = 20.5;
 
                 WSLaNacion.mencion men1 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men2 = new WSLaNacion.mencion();
@@ -379,6 +379,8 @@ namespace FormCargaOP
                 WSLaNacion.mencion men10 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men11 = new WSLaNacion.mencion();
                 WSLaNacion.mencion men12 = new WSLaNacion.mencion();
+                WSLaNacion.mencion men13 = new WSLaNacion.mencion();
+                WSLaNacion.mencion men14 = new WSLaNacion.mencion();
 
                 //men1.Ubicacion = textBox26.Text;
                 //men1.DiaDEEmision = textBox25.Text;
@@ -449,21 +451,33 @@ namespace FormCargaOP
 
                 men10.Ubicacion = "";
                 men10.DiaDEEmision = "2022-10-24";
-                men10.TotalMenciones = 1;
+                men10.TotalMenciones = 2;
                 men10.UbicacionManualOrden = 0;
                 men10.IdAvisoNotables = "1224105128";
 
                 men11.Ubicacion = "";
                 men11.DiaDEEmision = "2022-10-26";
-                men11.TotalMenciones = 1;
+                men11.TotalMenciones = 3;
                 men11.UbicacionManualOrden = 0;
                 men11.IdAvisoNotables = "1226105106";
 
                 men12.Ubicacion = "";
                 men12.DiaDEEmision = "2022-10-28";
-                men12.TotalMenciones = 1;
+                men12.TotalMenciones = 4;
                 men12.UbicacionManualOrden = 0;
                 men12.IdAvisoNotables = "1228105089";
+
+                men13.Ubicacion = "";
+                men13.DiaDEEmision = "2022-10-18";
+                men13.TotalMenciones = 2;
+                men13.UbicacionManualOrden = 0;
+                men13.IdAvisoNotables = "1226105106";
+
+                men14.Ubicacion = "";
+                men14.DiaDEEmision = "2022-10-20";
+                men14.TotalMenciones = 4;
+                men14.UbicacionManualOrden = 0;
+                men14.IdAvisoNotables = "1228105089";
 
                 ren1.Menciones = new WSLaNacion.ArrayOfMencion();
                 ren2.Menciones = new WSLaNacion.ArrayOfMencion();
@@ -480,11 +494,13 @@ namespace FormCargaOP
                 ren1.Menciones.Add(men10);
                 ren1.Menciones.Add(men11);
                 ren1.Menciones.Add(men12);
+                ren2.Menciones.Add(men13);
+                ren2.Menciones.Add(men14);
 
                 op.Renglones = new WSLaNacion.ArrayOfRenglon();
 
                 op.Renglones.Add(ren1);
-                //op.Renglones.Add(ren2);
+                op.Renglones.Add(ren2);
 
                 var respuesta = client.addOrden(op);
 

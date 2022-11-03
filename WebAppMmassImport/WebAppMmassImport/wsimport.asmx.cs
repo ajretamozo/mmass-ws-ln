@@ -40,11 +40,32 @@ namespace WebAppMmassImport
             var jsonString = new JavaScriptSerializer();
             var jsonStringResult = jsonString.Serialize(registro);
 
-            if (registro.IdOPMMASS != 0)
+            if (registro.NroOP == "")
+            {
+                resp.Descripcion += " - Debe enviar un Nro de OP";
+                error = true;
+            }
+
+            if (registro.IdOPMMASS < 0)
+            {
+                resp.Descripcion += " - Debe enviar un IdOPMMASS";
+                error = true;
+            }
+
+            if (registro.IdOPMMASS == 0)
+            {
+                int idOPExistente = registro.comprobarNroOP();
+                if (idOPExistente > 0)
+                {
+                    resp.Descripcion += "La OP nº: " + registro.NroOP + " que intenta crear, ya existe con el idOPMMASS: " + idOPExistente;
+                    error = true;
+                }
+            }
+            else
             {
                 if (!registro.comprobarIdOrden())
                 {
-                    resp.Descripcion += "El IdOPMASS enviado no existe";
+                    resp.Descripcion += "El IdOPMMASS enviado no existe";
                     error = true;
                 }
             }
@@ -70,18 +91,6 @@ namespace WebAppMmassImport
             if (registro.comprobarContacto(registro.CUIAnunciante) == 0 && registro.RazSocAnunciante == "")
             {
                 resp.Descripcion += " - Debe enviar la Razón Social del Anunciante";
-                error = true;
-            }
-
-            if (registro.NroOP == "")
-            {
-                resp.Descripcion += " - Debe enviar un Nro de OP";
-                error = true;
-            }
-
-            if (registro.IdOPMMASS < 0)
-            {
-                resp.Descripcion += " - Debe enviar un IdOPMMASS";
                 error = true;
             }
 

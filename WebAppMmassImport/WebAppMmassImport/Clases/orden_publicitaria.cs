@@ -1432,7 +1432,7 @@ namespace WebAppMmassImport.Clases
             }
 
             string sql = @"insert into auditoria (fechahora, objeto, clave, accion, descripcion, comentario, idusuario, borrado) 
-                           values(@fechahora, 'ORDEN PUBLICITARIA', @clave, @accion, 'Insersión desde WebService', @comentario, 1, 0)";
+                           values(@fechahora, 'ORDEN PUBLICITARIA', @clave, @accion, 'Insersión desde WebService (v3.2.0)', @comentario, 1, 0)";
 
 
             List<SqlParameter> parametros = new List<SqlParameter>()
@@ -1473,6 +1473,20 @@ namespace WebAppMmassImport.Clases
             if (t.Rows.Count > 0)
             {
                 resultado = true;
+            }
+            return resultado;
+        }
+
+        public int comprobarNroOP()
+        {
+            string sqlCommand = "SELECT TOP 1 id_op FROM orden_pub_ap WHERE nro_orden_imp = " + NroOP;
+
+            int resultado = 0;
+
+            DataTable t = DB.Select(sqlCommand);
+            if (t.Rows.Count > 0)
+            {
+                resultado = DB.DInt(t.Rows[0]["id_op"].ToString());
             }
             return resultado;
         }
